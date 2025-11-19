@@ -1,10 +1,28 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*/__pycache__/
 *.py[codz]
 *$py.class
 
 # C extensions
 *.so
+
+# API Keys
+OPENAI_API_KEY.txt
+
+# Checkpoint files
+checkpoints/
+
+# Garbage codes
+code/data_processing/LLaVA-NeXT
+code/vlm_instances/LLaVA-NeXT
+
+# Garbage log files
+code/data_processing/log_*.txt
+code/unstructured_sft/log_*.txt
+
+# Ignore wandb files
+code/unstructured_sft/wandb/
 
 # Distribution / packaging
 .Python
