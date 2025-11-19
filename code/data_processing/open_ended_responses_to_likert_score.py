@@ -49,7 +49,7 @@ def map_response_to_likert(row):
     ### OLD_QUESTION:
     {old_question_text}
 
-    ### Response:
+    ### OLD_RESPONSE:
     {llm_response}
 
     ### NEW_QUESTION:
