@@ -20,6 +20,8 @@ from llava.mm_utils import process_images, tokenizer_image_token
 
 import torch
 from torch.utils.data import Dataset, DataLoader
+from torch.nn.utils.rnn import pad_sequence
+from torch import bfloat16
 
 from typing import List, Dict, Any, Optional
 import decord
@@ -34,15 +36,42 @@ OUTPUT_DIR = "/localdisk1/PARK/park_vlm_finetuning/checkpoints/unstructured_sft"
 USE_LORA = False
 USE_QLORA = True
 MODEL_ID = "lmms-lab/LLaVA-Video-7B-Qwen2"
+device = torch.device("cuda:0")
 
 tokenizer, model, image_processor, max_length = load_pretrained_model(
     MODEL_ID,
     None,
     "llava_qwen",
     torch_dtype="bfloat16",
-    device_map="auto",
+    device_map={"": 0},
     attn_implementation="sdpa",
 )
+
+# Turn off anyres
+core = model.get_base_model() if hasattr(model, "get_base_model") else model
+
+# Vision tower
+vt = core.get_vision_tower()
+
+device = next(model.parameters()).device
+
+# Move the entire SigLIP vision tower to bf16
+vt.to(device=device, dtype=torch.bfloat16)
+
+# Also move the inner vision_model if present
+if hasattr(vt, "vision_model"):
+    vt.vision_model.to(device=device, dtype=torch.bfloat16)
+
+# Also move embedding layers
+if hasattr(vt, "vision_tower"):
+    vt.vision_tower.to(device=device, dtype=torch.bfloat16)
+
+if hasattr(vt, "config"):
+    vt.config.image_aspect_ratio = "pad"
+
+# Top-level config
+if hasattr(model.config, "image_aspect_ratio"):
+    model.config.image_aspect_ratio = "pad"
 
 # optional: still wrap with LoRA
 if USE_QLORA:
@@ -77,6 +106,19 @@ model = get_peft_model(model, lora_config)
 model.config.use_cache = False
 model.enable_input_require_grads()
 model.gradient_checkpointing_enable()
+
+# `model` is a PeftModel; get the underlying LlavaQwenForCausalLM
+base = model.get_base_model()          # type: LlavaQwenForCausalLM
+
+# 1) vision tower to bf16
+vision_tower = base.get_vision_tower()
+if vision_tower is not None:
+    vision_tower.to(dtype=bfloat16, device=device)
+
+# 2) mm_projector to bf16
+mm_projector = base.get_model().mm_projector
+mm_projector.to(dtype=bfloat16, device=device)
+
 
 # Video Reader
 from decord import VideoReader, gpu, cpu
@@ -251,22 +293,34 @@ class LLaVAVideoJsonlDataset(Dataset):
 
         vr = decord.VideoReader(video_path, ctx=cpu(0))
         n_total = len(vr)
-        n_use = min(n_total, self.num_frames)
-        frame_indices = np.linspace(0, n_total - 1, n_use, dtype=int)
 
+        # Always sample exactly self.num_frames frames
+        if n_total >= self.num_frames:
+            # uniform sampling over the video
+            frame_indices = np.linspace(0, n_total - 1, self.num_frames, dtype=int)
+        else:
+            # not enough frames: repeat last frame to reach self.num_frames
+            base_indices = np.linspace(0, n_total - 1, n_total, dtype=int)
+            pad_count = self.num_frames - n_total
+            pad_indices = np.full(pad_count, base_indices[-1], dtype=int)
+            frame_indices = np.concatenate([base_indices, pad_indices])
+
+    
         # 1) Get numpy frames
         np_frames = [vr[i].asnumpy() for i in frame_indices]  # (H, W, 3) uint8
 
         # 2) Convert to PIL images so .size returns (width, height), not a scalar
         pil_frames = [Image.fromarray(frame) for frame in np_frames]
+        image_sizes = [img.size for img in pil_frames]  # each is (W, H)
 
         # 3) Process with LLaVA helper
         image_tensors = process_images(pil_frames, self.image_processor, self.model_config)
-
+        
         # Depending on your setup, image_tensors is usually a list of tensors.
         # For now, you can keep using the first element as your video tensor,
         # or adjust if you want to stack all frames.
-        pixel_values_videos = image_tensors[0]
+        # pixel_values_videos = image_tensors[0]
+        pixel_values_videos = image_tensors
 
         # build conversation using LLaVA's conv_templates
         # your raw JSONL format already has role / content, but you were
@@ -289,34 +343,35 @@ class LLaVAVideoJsonlDataset(Dataset):
 
         # LLaVA-Qwen chat format
         conv = copy.deepcopy(conv_templates[self.conv_template])
-        # user prompt gets the <image> token
         question = DEFAULT_IMAGE_TOKEN + "\n" + user_text.strip()
         conv.append_message(conv.roles[0], question)
         conv.append_message(conv.roles[1], assistant_text.strip())
         prompt = conv.get_prompt()
 
-        # tokenize, inserting IMAGE_TOKEN_INDEX at the right place
-        input_ids = tokenizer_image_token(
+        # 3. tokenize and insert IMAGE_TOKEN_INDEX
+        # IMPORTANT: do NOT use return_tensors="pt" here
+        input_ids_list = tokenizer_image_token(
             prompt,
             self.tokenizer,
             IMAGE_TOKEN_INDEX,
-            return_tensors="pt",
-        )[0]  # remove batch dim
+        )  # this is a plain list[int]
 
+        input_ids = torch.tensor(input_ids_list, dtype=torch.long)  # (seq_len,)
         attention_mask = torch.ones_like(input_ids)
 
-        # standard LM labels with ignore index on padding
+        # standard LM labels (we'll re-pad in collator)
         labels = input_ids.clone()
         if self.tokenizer.pad_token_id is not None:
             labels[input_ids == self.tokenizer.pad_token_id] = -100
-    
+
+        
         return {
-            "input_ids": input_ids,
+            "input_ids": input_ids,          # 1-D tensor
             "attention_mask": attention_mask,
             "labels": labels,
-            "images": pixel_values_videos,  # (F, 3, H, W)
+            "images": pixel_values_videos,   # keep whatever shape you already have (F, 3, H, W)
+            "image_sizes": image_sizes,  # list of (W, H) per frame
         }
-
 
 
 class LlavaNextSimpleVideoCollator:
@@ -324,46 +379,57 @@ class LlavaNextSimpleVideoCollator:
         self.tokenizer = tokenizer
 
     def __call__(self, features: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
-        # features[i] has:
-        #  input_ids: (seq_len_i,)
-        #  attention_mask: (seq_len_i,)
-        #  labels: (seq_len_i,)
-        #  pixel_values_videos: (F, 3, H, W)
+        # features[i]:
+        #   input_ids: (L_i,)
+        #   attention_mask: (L_i,)
+        #   labels: (L_i,)
+        #   images: (F, 3, H, W)
 
         input_ids = [f["input_ids"] for f in features]
-        attention_mask = [f["attention_mask"] for f in features]
+        attention_masks = [f["attention_mask"] for f in features]
+        labels = [f["labels"] for f in features]
+        images = [f["images"] for f in features]
+        image_sizes_lists = [f["image_sizes"] for f in features]  # list of lists
 
-        # labels = [f["labels"] for f in features] if "labels" in features[0] else None
-
-        # pad text
-        batch = self.tokenizer.pad(
-            {
-                "input_ids": input_ids,
-                "attention_mask": attention_mask,
-            },
-            padding=True,
-            return_tensors="pt",
+        # 1) pad input_ids to (B, L_max)
+        pad_token_id = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None else 0
+        input_ids = pad_sequence(
+            input_ids,
+            batch_first=True,
+            padding_value=pad_token_id,
         )
 
-        # Create labels = input_ids, mask padding as -100
-        labels = batch["input_ids"].clone()
-        labels[batch["attention_mask"] == 0] = -100
-        batch["labels"] = labels
-
-        # stack videos: (B, F, 3, H, W)
-        pixel_values_videos = torch.stack(
-            [f["images"] for f in features], dim=0
+        # 2) pad attention_mask to (B, L_max)
+        attention_masks = pad_sequence(
+            attention_masks,
+            batch_first=True,
+            padding_value=0,
         )
-        batch["images"] = pixel_values_videos
 
-        # Debug first batch: check shapes and placeholder count
-        # if not hasattr(self, "_dbg"):
-        #     print({k: v.shape for k, v in batch.items()})
-        #     image_token_id = self.processor.tokenizer.convert_tokens_to_ids("<image>")
-        #     print("placeholder count:", (batch["input_ids"] == image_token_id).sum())
-        #     self._dbg = True
+        # 3) pad labels to (B, L_max) with ignore_index=-100
+        labels = pad_sequence(
+            labels,
+            batch_first=True,
+            padding_value=-100,
+        )
+
+        # 4) stack images -> (B, F, 3, H, W)
+        # images = torch.stack(images, dim=0)
+        images = torch.stack([f["images"] for f in features], dim=0) # (B, F, 3, H, W)
+        
+        # flatten all sizes into one list (for all images across batch)
+        flat_sizes = [size for sizes in image_sizes_lists for size in sizes]
+
+        batch = {
+            "input_ids": input_ids,
+            "attention_mask": attention_masks,
+            "labels": labels,
+            "images": images,
+            "image_sizes": flat_sizes,
+        }
 
         return batch
+
 
 # class LlavaNextVideoDataCollatorWithPadding:
 #     def __init__(self, processor):
@@ -480,9 +546,10 @@ args = TrainingArguments(
     logging_steps = 20,
     save_strategy = 'steps',
     save_steps=len(train_dataset)//(BATCH_SIZE*gradient_accumulation_steps), # save every epoch
-    save_total_limit = 5,
-    fp16 = True, # we have the model train and eval with fp16 precision
-    fp16_full_eval = True,
+    save_total_limit = 50,
+    fp16 = False, # we have the model train and eval with fp16 precision
+    bf16=True,
+    # fp16_full_eval = True,
     optim = 'adamw_bnb_8bit', # adam in lower-bits to save memory, consider changing to 'adamw_torch' if model is not converging
     report_to = "wandb", # install wand to use this
     hub_model_id = None,
@@ -502,11 +569,29 @@ trainer = Trainer(
     data_collator = data_collator,
     train_dataset = train_dataset,
     eval_dataset = test_dataset,
-    args=args,
+    args=args
 )
 
 # batch = next(iter(DataLoader(train_dataset, batch_size=2, collate_fn=data_collator)))
 # print(batch.keys())
 # assert False
+
+# test_loader = DataLoader(train_dataset, batch_size=2, collate_fn=data_collator)
+# device = torch.device("cuda:0")
+# batch = next(iter(test_loader))
+
+# def move_to_device(x, device):
+#     if isinstance(x, torch.Tensor):
+#         return x.to(device)
+#     return x  # leave lists (like image_sizes) and other types alone
+
+# batch = {k: move_to_device(v, device) for k, v in batch.items()}
+# model.to(device)
+
+# with torch.no_grad():
+#     out = model(**batch)
+# print("loss:", out.loss.item())
+
+
 trainer.train()
 

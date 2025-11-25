@@ -29,7 +29,7 @@ import decord
 # from llava.model.builder import load_pretrained_model
 MAX_LENGTH = 256
 BATCH_SIZE = 1
-NUM_FRAMES = 32 # more frames -> more VRAM needed
+NUM_FRAMES = 2 # more frames -> more VRAM needed
 DATASET_PATH = "/localdisk1/PARK/park_vlm_finetuning/data/SFT_unstructured" # path where to save the dataset
 OUTPUT_DIR = "/localdisk1/PARK/park_vlm_finetuning/checkpoints/unstructured_sft" # path where to save the checkpoints
 
@@ -42,34 +42,36 @@ tokenizer, model, image_processor, max_length = load_pretrained_model(
     MODEL_ID,
     None,
     "llava_qwen",
-    torch_dtype="bfloat16",
+    dtype=torch.float32,
     device_map={"": 0},
     attn_implementation="sdpa",
 )
 
-# Turn off anyres
+model_config = model.config
+
+# Disable anyres + unpad, use flat patches and square images instead
+model_config.image_aspect_ratio = "square"      # or "pad"
+model_config.mm_patch_merge_type = "flat"
+
+# Make sure the inner model config sees the same values
+if hasattr(model, "get_model"):
+    inner = model.get_model()
+    inner.config.image_aspect_ratio = "square"
+    inner.config.mm_patch_merge_type = "flat"
+else:
+    # fallback if no get_model()
+    model.config.image_aspect_ratio = "square"
+    model.config.mm_patch_merge_type = "flat"
+
+model.config.use_cache = False
+model.gradient_checkpointing_enable()
+model.enable_input_require_grads()
+
 core = model.get_base_model() if hasattr(model, "get_base_model") else model
-
-# Vision tower
 vt = core.get_vision_tower()
-
-device = next(model.parameters()).device
-
-# Move the entire SigLIP vision tower to bf16
-vt.to(device=device, dtype=torch.bfloat16)
-
-# Also move the inner vision_model if present
-if hasattr(vt, "vision_model"):
-    vt.vision_model.to(device=device, dtype=torch.bfloat16)
-
-# Also move embedding layers
-if hasattr(vt, "vision_tower"):
-    vt.vision_tower.to(device=device, dtype=torch.bfloat16)
-
 if hasattr(vt, "config"):
     vt.config.image_aspect_ratio = "pad"
 
-# Top-level config
 if hasattr(model.config, "image_aspect_ratio"):
     model.config.image_aspect_ratio = "pad"
 
@@ -79,7 +81,7 @@ if USE_QLORA:
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
         bnb_4bit_use_double_quant=True,
-        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_compute_dtype=torch.float32,
     )
 else:
     bnb_config = None
@@ -102,23 +104,12 @@ lora_config = LoraConfig(
     ],
 )
 
-model = get_peft_model(model, lora_config)
+if USE_QLORA:
+    model = get_peft_model(model, lora_config)
+
 model.config.use_cache = False
 model.enable_input_require_grads()
 model.gradient_checkpointing_enable()
-
-# `model` is a PeftModel; get the underlying LlavaQwenForCausalLM
-base = model.get_base_model()          # type: LlavaQwenForCausalLM
-
-# 1) vision tower to bf16
-vision_tower = base.get_vision_tower()
-if vision_tower is not None:
-    vision_tower.to(dtype=bfloat16, device=device)
-
-# 2) mm_projector to bf16
-mm_projector = base.get_model().mm_projector
-mm_projector.to(dtype=bfloat16, device=device)
-
 
 # Video Reader
 from decord import VideoReader, gpu, cpu
@@ -256,7 +247,7 @@ class LLaVAVideoJsonlDataset(Dataset):
         image_processor=None,           # e.g., AutoProcessor.from_pretrained(...).image_processor
         tokenizer=None,                 # optional; pass if you want tokenized text returned
         num_frames: int = 32,
-        resolution: int = 336,
+        resolution: int = 224,
         return_tokenized: bool = True, # set True if you want input_ids/labels here (simple single-turn)
         pad_to_max: Optional[int] = None
     ):
@@ -321,7 +312,7 @@ class LLaVAVideoJsonlDataset(Dataset):
         # or adjust if you want to stack all frames.
         # pixel_values_videos = image_tensors[0]
         pixel_values_videos = image_tensors
-
+        
         # build conversation using LLaVA's conv_templates
         # your raw JSONL format already has role / content, but you were
         # previously converting via convert_llava_video_to_llava_next(raw)
@@ -363,16 +354,14 @@ class LLaVAVideoJsonlDataset(Dataset):
         labels = input_ids.clone()
         if self.tokenizer.pad_token_id is not None:
             labels[input_ids == self.tokenizer.pad_token_id] = -100
-
-        
+    
         return {
-            "input_ids": input_ids,          # 1-D tensor
+            "input_ids": input_ids,          # (L,)
             "attention_mask": attention_mask,
             "labels": labels,
-            "images": pixel_values_videos,   # keep whatever shape you already have (F, 3, H, W)
+            "images": pixel_values_videos,         # (F, 3, H, W), float32
             "image_sizes": image_sizes,  # list of (W, H) per frame
         }
-
 
 class LlavaNextSimpleVideoCollator:
     def __init__(self, tokenizer):
@@ -431,85 +420,13 @@ class LlavaNextSimpleVideoCollator:
         return batch
 
 
-# class LlavaNextVideoDataCollatorWithPadding:
-#     def __init__(self, processor):
-#         self.processor = processor
-
-#     def __call__(self, features):
-#         padded_inputs = self.processor.tokenizer.pad(
-#             {
-#                 "input_ids": [feat['input_ids'][0] for feat in features], # each element is one batch only so we slice [0]
-#                 "attention_mask": [feat['attention_mask'][0] for feat in features],
-#             },
-#             padding=True,
-#             return_tensors="pt",
-#         )
-        
-#         labels = padded_inputs["input_ids"].clone()
-#         labels[labels == self.processor.tokenizer.pad_token_id] = -100
-#         padded_inputs["labels"] = labels
-#         padded_inputs["pixel_values_videos"] = torch.stack([feat['pixel_values_videos'] for feat in features], dim=0)
-
-#         return padded_inputs
-
-# print(f"Dataset size: {len(dataset)} examples.")
-# print("Sample example keys:", dataset[0].keys())
-# print("Sample example:\n")
-
-# print(f"Video path: {dataset[0]['video_path']}")
-# print(f"Pixel values shape: {dataset[0]['pixel_values'].shape}")  # (T,C,H,W)
-# print(f"Number of frames: {dataset[0]['num_frames']}")
-# print("Messages:")
-# for msg in dataset[0]["messages"]:
-#     print(f"  {msg['role']}: {msg['content']}")
-
-# if "input_ids" in dataset[0]:
-#     print(f"Input IDs: {dataset[0]['input_ids']}")
-#     print(f"Attention Mask: {dataset[0]['attention_mask']}")
-#     print(f"Labels: {dataset[0]['labels']}")
-
-## Load model
-# Two options for training:
-# QLoRA: model uses 4-bit quantization, which helps in reducing memory usage while maintaining performance.
-# Standard LoRA:  model is loaded with standard LoRA adaptations.
-
-# pretrained = "lmms-lab/LLaVA-Video-7B-Qwen2"
-# model_name = "llava_qwen"
-# device = "cuda"
-# device_map = "auto"
-# tokenizer, model, image_processor, max_length = load_pretrained_model(pretrained, None, model_name, torch_dtype="bfloat16", device_map=device_map)  # Add any other thing you want to pass in llava_model_args
-
-# model.eval()
-    
-# model = LlavaNextVideoForConditionalGeneration.from_pretrained(
-#     MODEL_ID,
-#     torch_dtype=torch.bfloat16,
-#     quantization_config=bnb_config,
-#     device_map="auto",
-# )
-
-# image_processor = getattr(processor, "image_processor", processor)  # some processors expose .image_processor
-# tokenizer = processor.tokenizer
-# tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, use_fast=False)
-# tokenizer = processor
-    
-# train_dataset = LLaVAVideoJsonlDataset(
-#     jsonl_path="/localdisk1/PARK/park_vlm_finetuning/data/SFT_unstructured/vlm_conversations_train.jsonl",
-#     video_root="",       # or "" if paths in JSONL are absolute
-#     image_processor=image_processor,
-#     tokenizer=tokenizer,                 # let your collator/trainer handle tokenization
-#     num_frames=NUM_FRAMES,
-#     resolution=336,
-#     return_tokenized=True
-# )
-
 train_dataset = LLaVAVideoJsonlDataset(
     jsonl_path="/localdisk1/PARK/park_vlm_finetuning/data/SFT_unstructured/vlm_conversations_train.jsonl",
     video_root="",
     image_processor=image_processor,
     tokenizer=tokenizer,
     num_frames=NUM_FRAMES,
-    resolution=336,
+    resolution=224,
 )
 
 # let the dataset see the model config for process_images
@@ -522,12 +439,13 @@ test_dataset = LLaVAVideoJsonlDataset(
     image_processor=image_processor,
     tokenizer=tokenizer,                 # let your collator/trainer handle tokenization
     num_frames=NUM_FRAMES,
-    resolution=336
+    resolution=224
 )
 # let the dataset see the model config for process_images
 test_dataset.model_config = model.config
 
-gradient_accumulation_steps = 2
+gradient_accumulation_steps = 1
+
 args = TrainingArguments(
     # args related to training
     output_dir = OUTPUT_DIR,
@@ -547,8 +465,8 @@ args = TrainingArguments(
     save_strategy = 'steps',
     save_steps=len(train_dataset)//(BATCH_SIZE*gradient_accumulation_steps), # save every epoch
     save_total_limit = 50,
-    fp16 = False, # we have the model train and eval with fp16 precision
-    bf16=True,
+    fp16 = True, # we have the model train and eval with fp16 precision
+    bf16= False,
     # fp16_full_eval = True,
     optim = 'adamw_bnb_8bit', # adam in lower-bits to save memory, consider changing to 'adamw_torch' if model is not converging
     report_to = "wandb", # install wand to use this
@@ -562,6 +480,11 @@ args = TrainingArguments(
 )
 
 data_collator = LlavaNextSimpleVideoCollator(tokenizer=tokenizer)
+
+# print(model_config.mm_patch_merge_type, model_config.image_aspect_ratio)
+
+# print(model.get_model().config.mm_patch_merge_type, model.get_model().config.image_aspect_ratio)
+
 trainer = Trainer(
     model = model,
     tokenizer = tokenizer,
@@ -572,26 +495,4 @@ trainer = Trainer(
     args=args
 )
 
-# batch = next(iter(DataLoader(train_dataset, batch_size=2, collate_fn=data_collator)))
-# print(batch.keys())
-# assert False
-
-# test_loader = DataLoader(train_dataset, batch_size=2, collate_fn=data_collator)
-# device = torch.device("cuda:0")
-# batch = next(iter(test_loader))
-
-# def move_to_device(x, device):
-#     if isinstance(x, torch.Tensor):
-#         return x.to(device)
-#     return x  # leave lists (like image_sizes) and other types alone
-
-# batch = {k: move_to_device(v, device) for k, v in batch.items()}
-# model.to(device)
-
-# with torch.no_grad():
-#     out = model(**batch)
-# print("loss:", out.loss.item())
-
-
 trainer.train()
-
