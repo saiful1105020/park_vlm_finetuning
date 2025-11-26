@@ -1,0 +1,47 @@
+{
+    "human-human": {
+        "agreement_rate": 0.8366666666666666,
+        "ordinal_accuracy": 0.9416666666666665,
+        "MAE": 0.23333333333333336,
+        "MAPE": 0.12105555555555557,
+        "RMSE": 0.6758890819541681,
+        "QWK": 0.8874885899939065,
+        "alpha": 0.8889439148198589,
+        "icc_single": 0.8931319972132662,
+        "icc_single_ci": [
+            0.86,
+            0.92
+        ],
+        "icc_avg": 0.961644695908031,
+        "icc_avg_ci": [
+            0.95,
+            0.97
+        ]
+    },
+    "human-AI": {
+        "agreement_rate": 0.79,
+        "ordinal_accuracy": 0.9266666666666667,
+        "MAE": 0.2933333333333334,
+        "MAPE": 0.1300555555555555,
+        "RMSE": 0.7046835678477804,
+        "QWK": 0.8847766124822645,
+        "alpha": null,
+        "icc_single": null,
+        "icc_single_ci": null,
+        "icc_avg": null,
+        "icc_avg_ci": null
+    },
+    "GT-AI": {
+        "agreement_rate": 0.82,
+        "ordinal_accuracy": 0.9375,
+        "MAE": 0.25,
+        "MAPE": 0.11783333333333332,
+        "RMSE": 0.6403124237432849,
+        "QWK": 0.9062385656787413,
+        "alpha": null,
+        "icc_single": null,
+        "icc_single_ci": null,
+        "icc_avg": null,
+        "icc_avg_ci": null
+    }
+}

@@ -1,374 +1,374 @@
-row_id,q_type,annotation_type,old_q,response,new_q,gpt_likert_score,gpt_likert_explanation,A1_likert_score,A2_likert_score,A3_likert_score
+row_id,q_type,annotation_type,old_q,response,new_q,gpt_likert_score,gpt_likert_explanation,gt_likert_score,A1_likert_score,A2_likert_score,A3_likert_score
 84,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?","The subject is coherent in what they are speaking, delivering an easy to understand story.","The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response explicitly states that “The subject is coherent in what they are speaking, delivering an easy to understand story.” This directly supports the parts of the new question about coherence and being easy to understand. While it does not explicitly mention staying focused on the central topic or avoiding unorganized detours, there is no indication of any problems in that regard, and the positive description strongly implies overall organization.
 
 Given this strong alignment with most of the statement and implied alignment with the rest, the best rating is 5.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 54,Facial Expression and Ocular Analysis,C-Natalia,"Indicate which of the following are true for the subject: (i) The individual's face appears blank and emotionless, even when they are trying to express an emotion. (ii) The expression is weak or asymmetrical, and the individual has difficulty holding an expression (e.g., smile) for an extended period. Also mention if you observe other facial expression abnormalities. If there is nothing abnormal, output ""nothing abnormal"".",The expression is weak with reduced activation of lower face,"The subject’s facial expressions are natural, emotionally appropriate, and symmetrical (noblank/emotionless face, weakness, asymmetry, or difficulty holding expressions).",1,"The old response states: “The expression is weak with reduced activation of lower face,” which directly indicates abnormal, weakened facial expression rather than natural, full, and symmetrical expressions. This contradicts the new positive statement about natural and appropriate facial expressions.
 
 Therefore, the alignment with the NEW_QUESTION is very low.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,1,2,1
 71,Motor Performance and Task Execution,LlaVA-Qwen,"Document any abnormal signs observed in body parts other than the face. This includes, but is not limited to, tremors in the hands, involuntary shaking or rhythmic movements of the upper or lower extremities, stiffness or rigidity in the limbs, reduced arm swing while speaking, or any signs of bradykinesia (slowness of movement). Additionally, note any abnormal postures, difficulty in maintaining balance, or other motor irregularities that may be indicative of Parkinson's disease.",No abnormal signs were observed in the body parts other than the face.,"No abnormal signs are observed in body parts (e.g., no tremors, involuntary shaking, stiffness,rigidity, reduced arm swing, slowness, abnormal posture, or balance issues).",5,"The response explicitly states: “No abnormal signs were observed in the body parts other than the face.”  
 
 The new question is a positive statement that no abnormal signs (tremors, stiffness, abnormal posture, etc.) are observed in body parts. This matches exactly what the response reports—no abnormalities in non-facial body parts. There is full alignment with the new question.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 46,Facial Expression and Ocular Analysis,C-Nami,"Was there anything abnormal about the person’s eye blink rate? For example, they may not be blinking at all, or they may have reduced or increased blink rate compared to a normal person. If there is nothing abnormal, output ""normal blinking"".",decreased,"The person’s eye blink rate is normal (no absence of blinking, reduced blink rate, or excessive blinking).",1,"The old response ""decreased"" indicates that the person’s blink rate is reduced, which is explicitly an abnormality relative to the new statement claiming the blink rate is normal. Therefore, the response clearly contradicts the new statement.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",2,2,2,1
 45,Speech and Cognitive-Linguistic Assessment,C-Cayla,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",simple sentences,The subject does not use complex or difficult-to-understand sentences.,5,"The old response is ""simple sentences,"" which directly implies that the subject is *not* using complex or difficult-to-understand sentences. This aligns very strongly with the new statement: ""The subject does not use complex or difficult-to-understand sentences.""
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 40,Speech and Cognitive-Linguistic Assessment,C-Natalia,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?", easy to understand story,"The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response “easy to understand story” directly affirms that the subject’s speech is easy to understand and implies coherence in the narrative. While it does not explicitly mention staying on the central topic or avoiding detours, the phrase “story” being “easy to understand” generally suggests an organized, coherent structure.
 
 Given this strong positive alignment, a high agreement score is appropriate.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 23,Motor Performance and Task Execution,C-Natalia,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.",subject follows instructions and completes task,The subject followed all instructions accurately while completing the task (no deviationsobserved).,5,"The response states that the ""subject follows instructions and completes task"" and does not mention any deviations or issues. This directly supports the statement that the subject followed all instructions accurately with no observed deviations.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 81,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?",The subject is coherent in what they are speaking.,"The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response explicitly states: “The subject is coherent in what they are speaking.” This directly supports the idea that the speech is coherent. While it does not explicitly mention being “easy to understand” or “staying focused on the central topic,” coherence strongly implies both clarity and organization in this context. There is no indication of disagreement with any part of the new statement.
 
 Therefore, the response aligns strongly with the NEW_QUESTION.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 11,Technical Quality and Environmental Context,C-Cayla,"Mention if the background is overloaded (i.e., too many things), or the lighting condition is inappropriate (i.e., too dark or overlit). Otherwise, just output ""normal background"".",normal background,"The background is not overloaded, and the lighting conditions are appropriate (not too dark or overlit).",5,"The old response explicitly says ""normal background,"" which in the context of the old question means the background is not overloaded and the lighting is not inappropriate. This directly agrees with the new positive statement about appropriate background and lighting.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 1,Technical Quality and Environmental Context,C-Nami,"How far is the camera? A good position of the camera would be when the upper half of the subject's body remains visible, while the lower half is not captured in the frame. If the upper body is only partly visible, the camera is too close. If the lower body is also visible, the camera is too far.",good,"The camera distance is appropriate, with the upper half of the subject’s body visible and thelower half not captured.",5,"The response ""good"" in the context of being asked about how far the camera is strongly suggests that the respondent thinks the current camera distance is appropriate. Since the NEW_QUESTION defines what “appropriate” means (upper half visible, lower half not), ""good"" most reasonably aligns with agreement that this condition is met, and there is no indication of any problem or partial mismatch.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 19,Motor Performance and Task Execution,C-Nami,"Document any abnormal signs observed in body parts other than the face. This includes, but is not limited to, tremors in the hands, involuntary shaking or rhythmic movements of the upper or lower extremities, stiffness or rigidity in the limbs, reduced arm swing while speaking, or any signs of bradykinesia (slowness of movement). Additionally, note any abnormal postures, difficulty in maintaining balance, or other motor irregularities that may be indicative of Parkinson's disease.",none,"No abnormal signs are observed in body parts (e.g., no tremors, involuntary shaking, stiffness,rigidity, reduced arm swing, slowness, abnormal posture, or balance issues).",5,"The OLD_RESPONSE is ""none,"" given in the context of documenting abnormal signs in body parts other than the face. This clearly indicates that no abnormal signs were observed. The NEW_QUESTION is a positive statement that no such abnormalities are present. The response directly supports and fully aligns with this statement.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 31,Speech and Cognitive-Linguistic Assessment,C-Nami,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?",coherent,"The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response is a single word: “coherent.”  
 
 Given the old question contrasts coherent, easy-to-follow speech with unorganized, off-topic speech, the respondent’s choice of “coherent” clearly indicates they view the subject’s speech as organized and understandable. This aligns strongly with the new positive statement about coherence and focus.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 74,Motor Performance and Task Execution,LlaVA-Qwen,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.",The subject was able to follow the instructions while completing the task.,The subject followed all instructions accurately while completing the task (no deviationsobserved).,5,"The response explicitly states that “The subject was able to follow the instructions while completing the task” and does not mention any deviations or differences. This directly supports the idea that the subject followed all instructions accurately with no observed deviations.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 34,Speech and Cognitive-Linguistic Assessment,C-Nami,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",none,The subject does not use complex or difficult-to-understand sentences.,5,"The OLD_RESPONSE is ""none,"" which is not a complex sentence and is very easy to understand. This strongly supports the statement that the subject does not use complex or difficult-to-understand sentences.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 91,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Was there anything abnormal about the person’s eye blink rate? For example, they may not be blinking at all, or they may have reduced or increased blink rate compared to a normal person. If there is nothing abnormal, output ""normal blinking"".","No, there was no abnormality in the person's eye blink rate.","The person’s eye blink rate is normal (no absence of blinking, reduced blink rate, or excessive blinking).",5,"The response explicitly states that there was ""no abnormality in the person's eye blink rate,"" which directly supports the positive statement that the blink rate is normal (no absence, reduction, or excess). This is a clear and complete agreement with the NEW_QUESTION.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 5,Technical Quality and Environmental Context,C-Nami,"Mention if the background is overloaded (i.e., too many things), or the lighting condition is inappropriate (i.e., too dark or overlit). Otherwise, just output ""normal background"".",normal,"The background is not overloaded, and the lighting conditions are appropriate (not too dark or overlit).",5,"The OLD_QUESTION instructs the respondent to say ""normal background"" if the background is not overloaded and the lighting is appropriate. The response ""normal"" clearly indicates that neither issue (overloaded background nor inappropriate lighting) is present.
 
 Thus, it fully agrees with the NEW_QUESTION statement that the background is not overloaded and the lighting is appropriate.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 77,Motor Performance and Task Execution,LlaVA-Qwen,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.",The subject was able to follow the instructions while completing the task.,The subject followed all instructions accurately while completing the task (no deviationsobserved).,5,"The response explicitly states that “The subject was able to follow the instructions while completing the task” and does not mention any deviations or differences. This directly supports the idea that the subject followed all instructions accurately with no observed deviations.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 78,Motor Performance and Task Execution,LlaVA-Qwen,"Document any abnormal signs observed in body parts other than the face. This includes, but is not limited to, tremors in the hands, involuntary shaking or rhythmic movements of the upper or lower extremities, stiffness or rigidity in the limbs, reduced arm swing while speaking, or any signs of bradykinesia (slowness of movement). Additionally, note any abnormal postures, difficulty in maintaining balance, or other motor irregularities that may be indicative of Parkinson's disease.",No abnormal signs were observed in the person's body parts other than the face.,"No abnormal signs are observed in body parts (e.g., no tremors, involuntary shaking, stiffness,rigidity, reduced arm swing, slowness, abnormal posture, or balance issues).",5,"The response explicitly states: “No abnormal signs were observed in the person's body parts other than the face,” which directly affirms the content of the new positive statement (no tremors, no rigidity, no abnormal posture, etc.). There is full alignment with the NEW_QUESTION.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 13,Technical Quality and Environmental Context,C-Cayla,"Mention if the background is overloaded (i.e., too many things), or the lighting condition is inappropriate (i.e., too dark or overlit). Otherwise, just output ""normal background"".",normal background,"The background is not overloaded, and the lighting conditions are appropriate (not too dark or overlit).",5,"The old response is exactly ""normal background,"" which, per the old question’s instructions, is to be used when the background is not overloaded and the lighting is not inappropriate. This directly affirms the new positive statement that the background is not overloaded and the lighting is appropriate.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 32,Speech and Cognitive-Linguistic Assessment,C-Nami,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",none,The subject does not use complex or difficult-to-understand sentences.,5,"The old response is simply ""none,"" which is not a complex or difficult-to-understand sentence. It is very short and clear. This strongly supports the statement that the subject does not use complex or difficult-to-understand sentences.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 56,Facial Expression and Ocular Analysis,C-Cayla,"Indicate which of the following are true for the subject: (i) The individual's face appears blank and emotionless, even when they are trying to express an emotion. (ii) The expression is weak or asymmetrical, and the individual has difficulty holding an expression (e.g., smile) for an extended period. Also mention if you observe other facial expression abnormalities. If there is nothing abnormal, output ""nothing abnormal"".",none,"The subject’s facial expressions are natural, emotionally appropriate, and symmetrical (noblank/emotionless face, weakness, asymmetry, or difficulty holding expressions).",5,"The old question asks for any abnormalities in facial expression, with “nothing abnormal” as the normal finding. The response is “none,” which in this context most reasonably means no abnormalities were observed. That supports the statement that facial expressions are natural, appropriate, and symmetrical, with no blankness, weakness, or difficulty holding expressions. Therefore, the alignment with the new positive statement is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,3,5
 89,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?","The subject is coherent in what they are speaking, delivering an easy to understand story.","The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response explicitly states that “The subject is coherent in what they are speaking, delivering an easy to understand story.” This directly supports the parts of the new question about coherence and ease of understanding. While it does not explicitly mention staying focused on the central topic or avoiding unorganized detours, coherence and an easy-to-understand story strongly imply a focused, organized speech. Thus, the alignment with the new question is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 27,Motor Performance and Task Execution,C-Cayla,"Please describe whether the person demonstrates any difficulty through their facial expressions. Some examples of visible difficulty include furrowed brow, squinting eyes, clenched jaw, tight lips, head hanging low, sighing, wrinkled forehead, etc. Mention such specific details when found. End output with a final answer choice: ""Yes"" or ""No"".",none,The person shows no signs of difficulty in facial expressions.,5,"The old question asks whether the person demonstrates any visible difficulty in facial expressions. The response is ""none,"" which directly indicates that no such difficulties were observed. This aligns very strongly with the new statement that the person shows no signs of difficulty in facial expressions.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 43,Speech and Cognitive-Linguistic Assessment,C-Cayla,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",simple sentences,The subject does not use complex or difficult-to-understand sentences.,5,"The old response is ""simple sentences,"" given to the question about whether the subject is using complex, difficult-to-understand sentences. Describing the sentences as ""simple"" clearly implies that the subject is *not* using complex or difficult-to-understand sentences. This strongly supports the new positive statement that the subject does not use complex or difficult-to-understand sentences.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 70,Technical Quality and Environmental Context,LlaVA-Qwen,"Indicate whether any other individuals were present in the background. If so, provide a brief description (e.g., ""An older male is visible in the background""). Conclude with a final answer: ""Yes"" or ""No"".","No, there were no other individuals present in the background.",No other individuals are visible in the background during the task.,5,"The response explicitly states: “No, there were no other individuals present in the background,” which directly agrees with the new statement that no other individuals are visible in the background during the task. This is a complete and unambiguous alignment.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 16,Motor Performance and Task Execution,C-Nami,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.",compliant,The subject followed all instructions accurately while completing the task (no deviationsobserved).,5,"The word ""compliant"" directly indicates that the subject followed the instructions as required, with no mention of any deviations or issues. This aligns strongly with the statement that the subject followed all instructions accurately and that no deviations were observed.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 41,Speech and Cognitive-Linguistic Assessment,C-Cayla,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?",coherent,"The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response is a single word: “coherent.”  
 
 Given the old question contrasts coherent, easy-to-follow speech with unorganized, off-topic speech, the respondent’s choice of “coherent” clearly indicates they see the subject’s speech as organized and understandable. This strongly aligns with the new positive statement about coherence and focus.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 97,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Indicate which of the following are true for the subject: (i) The individual's face appears blank and emotionless, even when they are trying to express an emotion. (ii) The expression is weak or asymmetrical, and the individual has difficulty holding an expression (e.g., smile) for an extended period. Also mention if you observe other facial expression abnormalities. If there is nothing abnormal, output ""nothing abnormal"".","(i) The individual's face appears blank and emotionless, even when they are trying to express an emotion.","The subject’s facial expressions are natural, emotionally appropriate, and symmetrical (noblank/emotionless face, weakness, asymmetry, or difficulty holding expressions).",1,"The response explicitly states that “the individual's face appears blank and emotionless,” which directly contradicts the NEW_QUESTION’s description of natural, emotionally appropriate expressions without a blank/emotionless face. This indicates the subject does not meet the positive criteria described.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,1,1,1
 10,Technical Quality and Environmental Context,C-Natalia,"Indicate if any body part critical for this task is partially visible (or invisible). For example, was the subject wearing a mask that may have obstructed important visual information? Or did the face go out of frame while the subject was completing the task?",good visibility,"All critical body parts (e.g., unobstructed face) remain fully visible in the frame throughout the task.",5,"The response “good visibility” directly implies that there were no notable obstructions or missing critical body parts, and visibility was satisfactory for the task. This aligns strongly with the statement that all critical body parts remain fully visible throughout. There is no indication of partial or invisible body parts.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 73,Motor Performance and Task Execution,LlaVA-Qwen,"Please describe whether the person demonstrates any difficulty through their facial expressions. Some examples of visible difficulty include furrowed brow, squinting eyes, clenched jaw, tight lips, head hanging low, sighing, wrinkled forehead, etc. Mention such specific details when found. End output with a final answer choice: ""Yes"" or ""No"".","The person demonstrates a furrowed brow and a slightly clenched jaw, which could be indicative of difficulty or concentration.",The person shows no signs of difficulty in facial expressions.,1,"The response explicitly notes a “furrowed brow and a slightly clenched jaw,” which are classic signs of visible difficulty or strain. Even though it allows that this could also indicate concentration, it clearly does not describe an absence of difficulty signals. Therefore, it conflicts with the statement “The person shows no signs of difficulty in facial expressions.”
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",2,2,1,2
 12,Technical Quality and Environmental Context,C-Cayla,"Indicate if any body part critical for this task is partially visible (or invisible). For example, was the subject wearing a mask that may have obstructed important visual information? Or did the face go out of frame while the subject was completing the task?",none,"All critical body parts (e.g., unobstructed face) remain fully visible in the frame throughout the task.",5,"The old question asks whether any critical body part was partially visible or invisible. The response “none” indicates that there were no such obstructions or visibility issues. This directly supports the new positive statement that all critical body parts remained fully visible throughout the task.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,4,5
 48,Facial Expression and Ocular Analysis,C-Nami,"Indicate the extent of lips parting when the subject is not saying anything (i.e., always/most of the times/sometimes/very few times/never).","none, but very limited time spent at rest","The subject’s lips are never parted when not speaking (e.g., closed or slightly parted most ofthe time).",5,"The old response says “none,” indicating no lip parting at rest, which directly supports the statement that the subject’s lips are never parted when not speaking. The added note “very limited time spent at rest” does not contradict this; it just qualifies how often rest is observed. Overall, this strongly agrees with the new statement.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",4,4,4,4
 86,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?","The subject is coherent in what they are speaking, delivering an easy to understand story.","The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response explicitly states that “The subject is coherent in what they are speaking, delivering an easy to understand story.” This directly supports the parts of the new question about coherence and being easy to understand. While it does not explicitly mention staying focused on the central topic or avoiding unorganized detours, there is no indication of any problems in that regard, and the positive description strongly implies overall clarity and organization.
 
 Given this strong alignment with most of the statement and implied alignment with the rest, the most appropriate rating is 5.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 29,Motor Performance and Task Execution,C-Cayla,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.",yes follows instructions,The subject followed all instructions accurately while completing the task (no deviationsobserved).,5,"The response “yes follows instructions” directly affirms that the subject followed instructions, with no mention of any deviations or problems. This aligns very strongly with the statement that the subject followed all instructions accurately and that no deviations were observed.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 94,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Indicate which of the following are true for the subject: (i) The individual's face appears blank and emotionless, even when they are trying to express an emotion. (ii) The expression is weak or asymmetrical, and the individual has difficulty holding an expression (e.g., smile) for an extended period. Also mention if you observe other facial expression abnormalities. If there is nothing abnormal, output ""nothing abnormal"".","(i) The individual's face appears blank and emotionless, even when they are trying to express an emotion.","The subject’s facial expressions are natural, emotionally appropriate, and symmetrical (noblank/emotionless face, weakness, asymmetry, or difficulty holding expressions).",1,"The response explicitly states that the individual's face appears “blank and emotionless, even when they are trying to express an emotion.” This directly contradicts the NEW_QUESTION, which describes natural, emotionally appropriate expressions without a blank/emotionless appearance. Therefore, alignment with the positive statement is very low.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,1,1,1
 6,Technical Quality and Environmental Context,C-Natalia,"Indicate if any body part critical for this task is partially visible (or invisible). For example, was the subject wearing a mask that may have obstructed important visual information? Or did the face go out of frame while the subject was completing the task?",good visibility,"All critical body parts (e.g., unobstructed face) remain fully visible in the frame throughout the task.",5,"The response “good visibility” directly implies that there were no notable obstructions or issues with seeing critical body parts. Since the original question asked about partial visibility or obstruction, describing the visibility as “good” suggests that important areas like the face were adequately and likely fully visible throughout the task. This aligns strongly with the statement that all critical body parts remain fully visible.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 67,Technical Quality and Environmental Context,LlaVA-Qwen,"Indicate if any body part critical for this task is partially visible (or invisible). For example, was the subject wearing a mask that may have obstructed important visual information? Or did the face go out of frame while the subject was completing the task?",No,"All critical body parts (e.g., unobstructed face) remain fully visible in the frame throughout the task.",5,"The old question asks whether any critical body part was partially visible or invisible. The response ""No"" indicates that no such obstruction or invisibility occurred. This directly supports the new positive statement that all critical body parts remained fully visible throughout the task.
 
 Therefore, the alignment with the new question is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 66,Technical Quality and Environmental Context,LlaVA-Qwen,"How far is the camera? A good position of the camera would be when the upper half of the subject's body remains visible, while the lower half is not captured in the frame. If the upper body is only partly visible, the camera is too close. If the lower body is also visible, the camera is too far.",The camera is at a good position.,"The camera distance is appropriate, with the upper half of the subject’s body visible and thelower half not captured.",5,"The response explicitly states, “The camera is at a good position,” which directly matches the definition of an appropriate camera distance given in the OLD_QUESTION (upper half visible, lower half not). Although it doesn’t restate the body framing details, it clearly affirms that the camera is positioned as described.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 36,Speech and Cognitive-Linguistic Assessment,C-Natalia,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",no,The subject does not use complex or difficult-to-understand sentences.,5,"The old question asks whether the subject is using complex, difficult-to-understand sentences, and the response is ""no."" This means the respondent is saying the subject is *not* using complex or difficult sentences.  
 
 The new question is a positive statement: ""The subject does not use complex or difficult-to-understand sentences."" This directly matches the meaning of the response ""no"" to the old question. Therefore, the alignment is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 17,Motor Performance and Task Execution,C-Nami,"Please describe whether the person demonstrates any difficulty through their facial expressions. Some examples of visible difficulty include furrowed brow, squinting eyes, clenched jaw, tight lips, head hanging low, sighing, wrinkled forehead, etc. Mention such specific details when found. End output with a final answer choice: ""Yes"" or ""No"".","slight, frequent pauses and squinting eyes when trying to think of more to say",The person shows no signs of difficulty in facial expressions.,1,"The old response explicitly notes “slight, frequent pauses and squinting eyes when trying to think of more to say,” which are signs of difficulty or strain. This directly contradicts the new statement that the person shows no signs of difficulty in facial expressions. Therefore, alignment with the new question is very low.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",2,2,1,2
 50,Facial Expression and Ocular Analysis,C-Nami,"Indicate the extent of lips parting when the subject is not saying anything (i.e., always/most of the times/sometimes/very few times/never).",never,"The subject’s lips are never parted when not speaking (e.g., closed or slightly parted most ofthe time).",5,"The OLD_QUESTION asks how often the subject’s lips part when not speaking, and the response is “never,” meaning the lips do not part at all in that situation.  
 
 The NEW_QUESTION states that the subject’s lips are never parted when not speaking. This directly matches the meaning of “never” in the original response.  
 
 Therefore, the alignment is complete and strongly supportive of the new statement.  
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 35,Speech and Cognitive-Linguistic Assessment,C-Nami,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?",coherent,"The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response is a single word: “coherent.”  
 
 Given the old question contrasts coherent, easy-to-follow speech with unorganized, off-topic speech, the respondent’s choice of “coherent” clearly indicates they see the subject’s speech as organized and understandable, aligning strongly with the new positive statement.  
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 8,Technical Quality and Environmental Context,C-Natalia,"Indicate whether any other individuals were present in the background. If so, provide a brief description (e.g., ""An older male is visible in the background""). Conclude with a final answer: ""Yes"" or ""No"".",none,No other individuals are visible in the background during the task.,5,"The old question asks whether any other individuals were present and to conclude with ""Yes"" or ""No."" The response ""none"" indicates that there were no other individuals present. This directly supports the new statement that no other individuals are visible in the background during the task. Therefore, the alignment is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 96,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Provide a brief description of the subject's perceived state of mind, noting whether they appear energetic, exhausted, calm, confused, or exhibit any other relevant emotional or cognitive cues.","The subject appears to be in a calm state, with no significant changes in their facial expressions or body language throughout the video.","The subject appears calm and alert, with no signs of exhaustion, confusion, or inappropriate energy levels.",4,"The response explicitly states that the subject appears calm, which directly supports the “appears calm” part of the new question. It also notes “no significant changes in their facial expressions or body language,” suggesting stability and no obvious distress or agitation, which is loosely consistent with no inappropriate energy levels.
 
 However, the response does not mention alertness, nor does it explicitly address absence of exhaustion or confusion. These aspects are not contradicted, but they are not confirmed either. Thus, the alignment is good but not complete.
 
-**Likert Score: 4**",,,
+**Likert Score: 4**",5,5,5,5
 28,Motor Performance and Task Execution,C-Cayla,"Please describe whether the person demonstrates any difficulty through their facial expressions. Some examples of visible difficulty include furrowed brow, squinting eyes, clenched jaw, tight lips, head hanging low, sighing, wrinkled forehead, etc. Mention such specific details when found. End output with a final answer choice: ""Yes"" or ""No"".",some furrowed brow at the beginning when thinking of what to say,The person shows no signs of difficulty in facial expressions.,1,"The old response explicitly notes “some furrowed brow at the beginning when thinking of what to say,” which is a clear sign of facial difficulty or strain. This directly contradicts the new statement that the person shows no signs of difficulty in facial expressions. Therefore, alignment with the new question is very low.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",2,3,1,2
 20,Motor Performance and Task Execution,C-Nami,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.",compliant,The subject followed all instructions accurately while completing the task (no deviationsobserved).,5,"The word ""compliant"" directly indicates that the subject followed the instructions as required, with no mention of any deviations or issues. This aligns very strongly with the statement that the subject followed all instructions accurately and that no deviations were observed.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 82,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",No.,The subject does not use complex or difficult-to-understand sentences.,5,"The old question asks whether the subject is using complex, difficult-to-understand sentences, and the response is ""No."" This means the respondent is saying the subject is *not* using complex or difficult sentences. The new question is a positive statement of that same idea: ""The subject does not use complex or difficult-to-understand sentences."" The response directly agrees with this statement.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 26,Motor Performance and Task Execution,C-Cayla,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.",follows instructions but struggles with memory to review her recent movie,The subject followed all instructions accurately while completing the task (no deviationsobserved).,4,"The response says the subject ""follows instructions"" but also ""struggles with memory to review her recent movie."" This indicates that while instructions were generally followed, there was some difficulty in executing a specific part of the task (reviewing the movie) due to memory issues. That suggests minor deviation or incomplete adherence, not perfect, error-free following of all instructions.
 
 A rating of 4 (agree) best reflects this: mostly followed instructions, but not fully without issues.
 
-**Likert Score: 4**",,,
+**Likert Score: 4**",3,3,3,3
 63,Technical Quality and Environmental Context,LlaVA-Qwen,"How far is the camera? A good position of the camera would be when the upper half of the subject's body remains visible, while the lower half is not captured in the frame. If the upper body is only partly visible, the camera is too close. If the lower body is also visible, the camera is too far.",The camera is at a good position.,"The camera distance is appropriate, with the upper half of the subject’s body visible and thelower half not captured.",5,"The response explicitly states, “The camera is at a good position,” which directly matches the definition of an appropriate camera distance given in the OLD_QUESTION (upper half visible, lower half not). Although it doesn’t restate the body-framing details, it clearly affirms that the current position meets the described criteria.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 14,Technical Quality and Environmental Context,C-Cayla,"Indicate if any body part critical for this task is partially visible (or invisible). For example, was the subject wearing a mask that may have obstructed important visual information? Or did the face go out of frame while the subject was completing the task?",none,"All critical body parts (e.g., unobstructed face) remain fully visible in the frame throughout the task.",5,"The old question asks whether any critical body part was partially visible or invisible. The response “none” indicates that there were no such obstructions or visibility issues. This directly supports the new positive statement that all critical body parts remained fully visible throughout the task.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 25,Motor Performance and Task Execution,C-Natalia,"Please describe whether the person demonstrates any difficulty through their facial expressions. Some examples of visible difficulty include furrowed brow, squinting eyes, clenched jaw, tight lips, head hanging low, sighing, wrinkled forehead, etc. Mention such specific details when found. End output with a final answer choice: ""Yes"" or ""No"".","occaisonal wrinkled forehead and furrowed brow, but overall subject does not appear to have significant difficulty",The person shows no signs of difficulty in facial expressions.,3,"The response notes “occasional wrinkled forehead and furrowed brow,” which are explicit signs of difficulty, but then adds that the subject “does not appear to have significant difficulty.” This indicates that some signs of difficulty are present, though they are not frequent or severe. Since the new statement says the person shows *no* signs of difficulty, the alignment is only partial.
 
-**Likert Score: 3**",,,
+**Likert Score: 3**",1,1,1,3
 4,Technical Quality and Environmental Context,C-Nami,"Mention if the background is overloaded (i.e., too many things), or the lighting condition is inappropriate (i.e., too dark or overlit). Otherwise, just output ""normal background"".",poor light ,"The background is not overloaded, and the lighting conditions are appropriate (not too dark or overlit).",1,"The old response “poor light” explicitly indicates that the lighting condition is inappropriate.  
 The new question states that lighting conditions are appropriate, so this directly contradicts the statement.  
 No information is given about the background, but the clear disagreement on lighting dominates the evaluation.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,2,1,1
 18,Motor Performance and Task Execution,C-Nami,"Please describe whether the person demonstrates any difficulty through their facial expressions. Some examples of visible difficulty include furrowed brow, squinting eyes, clenched jaw, tight lips, head hanging low, sighing, wrinkled forehead, etc. Mention such specific details when found. End output with a final answer choice: ""Yes"" or ""No"".",none,The person shows no signs of difficulty in facial expressions.,5,"The old question asks whether the person demonstrates any visible difficulty in facial expressions. The response ""none"" indicates that the observer did not see any such signs of difficulty. This directly supports the new statement that ""The person shows no signs of difficulty in facial expressions.""
 
 Therefore, the alignment with the new question is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 39,Speech and Cognitive-Linguistic Assessment,C-Natalia,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?","normal coherence, easy to understand story","The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response says “normal coherence, easy to understand story,” which directly supports that the speech is coherent and easy to understand. While it doesn’t explicitly mention staying on the central topic or avoiding detours, there is no indication of disorganization or topic drifting. Overall, it aligns well with the positive statement.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 9,Technical Quality and Environmental Context,C-Natalia,"How far is the camera? A good position of the camera would be when the upper half of the subject's body remains visible, while the lower half is not captured in the frame. If the upper body is only partly visible, the camera is too close. If the lower body is also visible, the camera is too far.",good position,"The camera distance is appropriate, with the upper half of the subject’s body visible and thelower half not captured.",5,"The old response “good position” directly indicates that the camera distance/position is appropriate according to the criteria given in the old question. Since the new question is a positive statement asserting that the camera distance is appropriate, this response fully agrees with it.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 79,Motor Performance and Task Execution,LlaVA-Qwen,"Document any abnormal signs observed in body parts other than the face. This includes, but is not limited to, tremors in the hands, involuntary shaking or rhythmic movements of the upper or lower extremities, stiffness or rigidity in the limbs, reduced arm swing while speaking, or any signs of bradykinesia (slowness of movement). Additionally, note any abnormal postures, difficulty in maintaining balance, or other motor irregularities that may be indicative of Parkinson's disease.",No abnormal signs were observed in the person's body parts other than the face.,"No abnormal signs are observed in body parts (e.g., no tremors, involuntary shaking, stiffness,rigidity, reduced arm swing, slowness, abnormal posture, or balance issues).",5,"The response explicitly states: “No abnormal signs were observed in the person's body parts other than the face.”  
 
 This directly affirms the NEW_QUESTION statement that no abnormal signs (tremors, stiffness, abnormal posture, etc.) are observed in body parts. There is full alignment with the positive statement.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 7,Technical Quality and Environmental Context,C-Natalia,"Indicate whether any other individuals were present in the background. If so, provide a brief description (e.g., ""An older male is visible in the background""). Conclude with a final answer: ""Yes"" or ""No"".",none,No other individuals are visible in the background during the task.,5,"The old question asks whether any other individuals were present and to conclude with ""Yes"" or ""No.""  
 The response ""none"" indicates that there were no other individuals present in the background.  
 This directly supports the new statement: ""No other individuals are visible in the background during the task.""
 
 Therefore, the alignment is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 65,Technical Quality and Environmental Context,LlaVA-Qwen,"Indicate if any body part critical for this task is partially visible (or invisible). For example, was the subject wearing a mask that may have obstructed important visual information? Or did the face go out of frame while the subject was completing the task?","No, the face is visible throughout the video.","All critical body parts (e.g., unobstructed face) remain fully visible in the frame throughout the task.",5,"The response explicitly states that “the face is visible throughout the video,” directly supporting the idea that a key critical body part (the face) remains fully visible for the entire task. There is no mention of any obstruction or partial visibility, so this aligns strongly with the positive statement in the NEW_QUESTION.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 37,Speech and Cognitive-Linguistic Assessment,C-Natalia,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",no,The subject does not use complex or difficult-to-understand sentences.,5,"The old question asks whether the subject is using complex, difficult-to-understand sentences, and the response is ""no."" This means the respondent is saying the subject is *not* using complex or difficult sentences. The new question is a positive statement of the same idea: ""The subject does not use complex or difficult-to-understand sentences."" The response directly agrees with this statement.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 90,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?","The subject is coherent in what they are speaking, delivering an easy to understand story.","The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response explicitly states that “The subject is coherent in what they are speaking, delivering an easy to understand story.” This directly supports the parts of the new question about coherence and being easy to understand. While it does not explicitly mention staying focused on the central topic or avoiding unorganized detours, coherence and an easy-to-understand story strongly imply a focused, organized speech. Thus, the alignment with the new question is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 57,Facial Expression and Ocular Analysis,C-Cayla,"Indicate which of the following are true for the subject: (i) The individual's face appears blank and emotionless, even when they are trying to express an emotion. (ii) The expression is weak or asymmetrical, and the individual has difficulty holding an expression (e.g., smile) for an extended period. Also mention if you observe other facial expression abnormalities. If there is nothing abnormal, output ""nothing abnormal"".",normal,"The subject’s facial expressions are natural, emotionally appropriate, and symmetrical (noblank/emotionless face, weakness, asymmetry, or difficulty holding expressions).",5,"The old question asks specifically about abnormalities in facial expression (blank affect, weakness, asymmetry, difficulty holding expressions) and instructs that if there is nothing abnormal, one should say ""nothing abnormal."" The response ""normal"" clearly indicates no abnormalities were observed, which directly supports the new positive statement that expressions are natural, appropriate, and symmetrical. Thus, the alignment is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,4,5
 100,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Provide a brief description of the subject's perceived state of mind, noting whether they appear energetic, exhausted, calm, confused, or exhibit any other relevant emotional or cognitive cues.","The subject appears to be engaged and animated, suggesting a state of active communication or explanation.","The subject appears calm and alert, with no signs of exhaustion, confusion, or inappropriate energy levels.",3,"The response describes the subject as ""engaged and animated,"" indicating active communication and higher energy. This does not clearly convey ""calm,"" and ""animated"" may even suggest elevated energy rather than a neutral or appropriate level. However, there are no indications of exhaustion or confusion, and being engaged implies some level of alertness. Thus, it partially aligns with being alert and not exhausted/confused, but conflicts with the ""calm"" and ""no inappropriate energy levels"" aspects.
 
-**Likert Score: 3**",,,
+**Likert Score: 3**",3,2,3,5
 55,Facial Expression and Ocular Analysis,C-Natalia,"Provide a brief description of the subject's perceived state of mind, noting whether they appear energetic, exhausted, calm, confused, or exhibit any other relevant emotional or cognitive cues.",calm,"The subject appears calm and alert, with no signs of exhaustion, confusion, or inappropriate energy levels.",3,"The response only states that the subject is ""calm."" This directly supports the ""appears calm"" part of the new statement but provides no information about alertness, exhaustion, confusion, or energy levels. Since it partially aligns but does not confirm the full statement, a moderate agreement score is appropriate.
 
-**Likert Score: 3**",,,
+**Likert Score: 3**",5,5,4,5
 44,Speech and Cognitive-Linguistic Assessment,C-Cayla,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",simple sentences,The subject does not use complex or difficult-to-understand sentences.,5,"The old response is ""simple sentences,"" given to the question about whether the subject is using complex, difficult-to-understand sentences. Describing the sentences as ""simple"" directly supports the new statement that the subject does not use complex or difficult-to-understand sentences. This is strong, unambiguous agreement.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 51,Facial Expression and Ocular Analysis,C-Natalia,"Indicate which of the following are true for the subject: (i) The individual's face appears blank and emotionless, even when they are trying to express an emotion. (ii) The expression is weak or asymmetrical, and the individual has difficulty holding an expression (e.g., smile) for an extended period. Also mention if you observe other facial expression abnormalities. If there is nothing abnormal, output ""nothing abnormal"".",The individualÃ¢ÂÂs face appears blank and emotionless,"The subject’s facial expressions are natural, emotionally appropriate, and symmetrical (noblank/emotionless face, weakness, asymmetry, or difficulty holding expressions).",1,"The old response states that “The individual’s face appears blank and emotionless,” which directly contradicts the new statement that facial expressions are natural and emotionally appropriate (i.e., not blank/emotionless). There is clear evidence of abnormality, so alignment with the new positive statement is very low.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,1,1,1
 68,Technical Quality and Environmental Context,LlaVA-Qwen,"How far is the camera? A good position of the camera would be when the upper half of the subject's body remains visible, while the lower half is not captured in the frame. If the upper body is only partly visible, the camera is too close. If the lower body is also visible, the camera is too far.",The camera is at a good position.,"The camera distance is appropriate, with the upper half of the subject’s body visible and thelower half not captured.",5,"The response explicitly states, “The camera is at a good position,” which directly matches the definition of an appropriate camera distance given in the OLD_QUESTION (upper half visible, lower half not). Although it doesn’t restate the body-framing details, it clearly affirms that the current position meets the described criteria.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 47,Facial Expression and Ocular Analysis,C-Nami,"Was there anything abnormal about the person’s eye blink rate? For example, they may not be blinking at all, or they may have reduced or increased blink rate compared to a normal person. If there is nothing abnormal, output ""normal blinking"".",normal,"The person’s eye blink rate is normal (no absence of blinking, reduced blink rate, or excessive blinking).",5,"The OLD_RESPONSE is ""normal"" to a question that explicitly says to output ""normal blinking"" if there is nothing abnormal. This directly indicates that the observer judged the blink rate as not abnormal. That aligns fully with the NEW_QUESTION’s statement that the person’s eye blink rate is normal.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,4,5
 69,Technical Quality and Environmental Context,LlaVA-Qwen,"How far is the camera? A good position of the camera would be when the upper half of the subject's body remains visible, while the lower half is not captured in the frame. If the upper body is only partly visible, the camera is too close. If the lower body is also visible, the camera is too far.",The camera is at a good position.,"The camera distance is appropriate, with the upper half of the subject’s body visible and thelower half not captured.",5,"The response explicitly states, “The camera is at a good position,” which directly matches the definition of an appropriate camera distance given in the OLD_QUESTION (upper half visible, lower half not). Although it doesn’t restate the body-framing details, it clearly affirms that the current position meets the described criteria.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,4,5
 62,Technical Quality and Environmental Context,LlaVA-Qwen,"Mention if the background is overloaded (i.e., too many things), or the lighting condition is inappropriate (i.e., too dark or overlit). Otherwise, just output ""normal background"".","The background is not overloaded, and the lighting condition is appropriate.","The background is not overloaded, and the lighting conditions are appropriate (not too dark or overlit).",5,"The response explicitly states: “The background is not overloaded, and the lighting condition is appropriate,” which directly matches the positive statement in the NEW_QUESTION about both background and lighting. There is full alignment with no contradictions or ambiguity.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 98,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Provide a brief description of the subject's perceived state of mind, noting whether they appear energetic, exhausted, calm, confused, or exhibit any other relevant emotional or cognitive cues.","The subject appears to be in a state of calm, with no significant changes in their facial expressions or body language throughout the video.","The subject appears calm and alert, with no signs of exhaustion, confusion, or inappropriate energy levels.",4,"The response explicitly states that the subject appears calm, which directly supports the “appears calm” part of the new question. It also notes “no significant changes in their facial expressions or body language,” suggesting stability and no obvious signs of distress or inappropriate energy. However, the response does not explicitly address alertness, exhaustion, or confusion. Because it partially but not fully supports all elements of the new statement, a moderately high score is appropriate.
 
-**Likert Score: 4**",,,
+**Likert Score: 4**",5,5,5,5
 80,Motor Performance and Task Execution,LlaVA-Qwen,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.",The subject was able to follow the instructions while completing the task.,The subject followed all instructions accurately while completing the task (no deviationsobserved).,5,"The response explicitly states that “The subject was able to follow the instructions while completing the task” and does not mention any deviations or differences. This directly supports the idea that the subject followed all instructions accurately with no observed deviations.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 42,Speech and Cognitive-Linguistic Assessment,C-Cayla,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",simple sentences,The subject does not use complex or difficult-to-understand sentences.,5,"The old response is ""simple sentences,"" which directly implies that the subject is *not* using complex or difficult-to-understand sentences. This aligns very strongly with the new statement: ""The subject does not use complex or difficult-to-understand sentences.""
 
 Therefore, the appropriate rating is 5 (strongly agree).
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 59,Facial Expression and Ocular Analysis,C-Cayla,"Indicate the extent of lips parting when the subject is not saying anything (i.e., always/most of the times/sometimes/very few times/never).",never,"The subject’s lips are never parted when not speaking (e.g., closed or slightly parted most ofthe time).",5,"The OLD_QUESTION asks how often the subject’s lips part when not speaking, and the response is “never,” meaning the lips do not part at all in that situation.  
 
 The NEW_QUESTION states that the subject’s lips are never parted when not speaking. This directly matches the meaning of “never” in the original response. Therefore, the alignment is complete.  
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 49,Facial Expression and Ocular Analysis,C-Nami,"Indicate the extent of lips parting when the subject is not saying anything (i.e., always/most of the times/sometimes/very few times/never).",few times but difficult to assess as only at rest for 1 sec,"The subject’s lips are never parted when not speaking (e.g., closed or slightly parted most ofthe time).",2,"The old response says the lips part a “few times,” which indicates that lip parting does occur, albeit infrequently. The new statement claims the lips are *never* parted when not speaking. Since “few times” contradicts “never,” but still suggests it is rare, the response only weakly aligns with the new statement.
 
 Most appropriate rating: 2 (disagree).
 
-**Likert Score: 2**",,,
+**Likert Score: 2**",2,2,2,3
 99,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Provide a brief description of the subject's perceived state of mind, noting whether they appear energetic, exhausted, calm, confused, or exhibit any other relevant emotional or cognitive cues.","The subject appears to be in a calm state, with no significant changes in their facial expressions or body language throughout the video.","The subject appears calm and alert, with no signs of exhaustion, confusion, or inappropriate energy levels.",4,"The response explicitly states that the subject appears calm, which directly supports the “appears calm” part of the new question. It also notes “no significant changes in their facial expressions or body language,” suggesting stability and no obvious distress or agitation, which is somewhat consistent with “no inappropriate energy levels.”
 
 However, the response does not mention alertness, nor does it explicitly rule out exhaustion or confusion. These aspects are not contradicted, but they are not confirmed either. Thus, the alignment is good but not complete.
 
-**Likert Score: 4**",,,
+**Likert Score: 4**",5,5,5,5
 58,Facial Expression and Ocular Analysis,C-Cayla,"Indicate the extent of lips parting when the subject is not saying anything (i.e., always/most of the times/sometimes/very few times/never).",sometimes,"The subject’s lips are never parted when not speaking (e.g., closed or slightly parted most ofthe time).",2,"The old response “sometimes” indicates that the subject’s lips are parted on some occasions when not speaking, and therefore not “never.” The new statement claims the lips are never parted when not speaking, which conflicts with “sometimes.” Thus, the alignment is low, but not total opposition (which would be “always” or “most of the times”).
 
-**Likert Score: 2**",,,
+**Likert Score: 2**",2,2,1,3
 76,Motor Performance and Task Execution,LlaVA-Qwen,"Please describe whether the person demonstrates any difficulty through their facial expressions. Some examples of visible difficulty include furrowed brow, squinting eyes, clenched jaw, tight lips, head hanging low, sighing, wrinkled forehead, etc. Mention such specific details when found. End output with a final answer choice: ""Yes"" or ""No"".","The person demonstrates a furrowed brow and a slightly clenched jaw, which could be indicative of difficulty or concentration.",The person shows no signs of difficulty in facial expressions.,1,"The response explicitly notes a “furrowed brow and a slightly clenched jaw,” which are classic signs of visible difficulty or strain. Even though it allows that this could also indicate concentration, it clearly does not describe an absence of difficulty signals. This directly contradicts the statement that the person shows no signs of difficulty in facial expressions.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,1,1,2
 33,Speech and Cognitive-Linguistic Assessment,C-Nami,"Is the subject coherent in what they are speaking? Are they delivering an easy to understand story, or are they deterring a lot from the central topic and delivering an unorganized speech?",coherent,"The subject’s speech is coherent, easy to understand, and stays focused on the central topic(no unorganized detours).",5,"The response is a single word: “coherent.”  
 
 Given the old question contrasts coherent, easy-to-follow speech with unorganized, off-topic speech, the respondent’s choice of “coherent” clearly indicates they see the subject’s speech as organized and understandable, aligning strongly with the new positive statement. There is no indication of any reservations or partial agreement.  
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 95,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Was there anything abnormal about the person’s eye blink rate? For example, they may not be blinking at all, or they may have reduced or increased blink rate compared to a normal person. If there is nothing abnormal, output ""normal blinking"".","No, there was no abnormality in the person's eye blink rate.","The person’s eye blink rate is normal (no absence of blinking, reduced blink rate, or excessive blinking).",5,"The response explicitly states that there was ""no abnormality in the person's eye blink rate,"" which directly supports the positive statement that the blink rate is normal (no absence, reduction, or excess). This is a clear and complete agreement with the NEW_QUESTION.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 60,Facial Expression and Ocular Analysis,C-Cayla,"Provide a brief description of the subject's perceived state of mind, noting whether they appear energetic, exhausted, calm, confused, or exhibit any other relevant emotional or cognitive cues.",calm,"The subject appears calm and alert, with no signs of exhaustion, confusion, or inappropriate energy levels.",3,"The old response only states that the subject is ""calm."" This directly supports the ""appears calm"" part of the new question but provides no information about alertness, exhaustion, confusion, or energy levels. Since it partially aligns (calm) but does not confirm the rest, a moderate agreement score is appropriate.
 
-**Likert Score: 3**",,,
+**Likert Score: 3**",5,5,5,5
 64,Technical Quality and Environmental Context,LlaVA-Qwen,"How far is the camera? A good position of the camera would be when the upper half of the subject's body remains visible, while the lower half is not captured in the frame. If the upper body is only partly visible, the camera is too close. If the lower body is also visible, the camera is too far.",The camera is at a good position.,"The camera distance is appropriate, with the upper half of the subject’s body visible and thelower half not captured.",5,"The response explicitly states, “The camera is at a good position,” which directly indicates that the camera distance is appropriate according to the criteria given in the OLD_QUESTION. Since “good position” in that context is defined as having the upper half visible and the lower half not captured, the response fully aligns with the NEW_QUESTION.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 85,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",No.,The subject does not use complex or difficult-to-understand sentences.,5,"The OLD_QUESTION asks whether the subject is using complex, difficult-to-understand sentences, and the response is ""No."" This means the respondent is saying the subject is *not* using such complex sentences.
 
 The NEW_QUESTION is a positive statement: ""The subject does not use complex or difficult-to-understand sentences."" This directly matches the meaning of the response ""No"" to the OLD_QUESTION.
 
 Thus, the alignment is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 38,Speech and Cognitive-Linguistic Assessment,C-Natalia,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",none,The subject does not use complex or difficult-to-understand sentences.,5,"The OLD_RESPONSE is ""none,"" which is not a complex sentence and is not difficult to understand. It clearly indicates an absence of complex sentences. This strongly supports the NEW_QUESTION statement that the subject does not use complex or difficult-to-understand sentences.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 30,Motor Performance and Task Execution,C-Cayla,"Document any abnormal signs observed in body parts other than the face. This includes, but is not limited to, tremors in the hands, involuntary shaking or rhythmic movements of the upper or lower extremities, stiffness or rigidity in the limbs, reduced arm swing while speaking, or any signs of bradykinesia (slowness of movement). Additionally, note any abnormal postures, difficulty in maintaining balance, or other motor irregularities that may be indicative of Parkinson's disease.",normal,"No abnormal signs are observed in body parts (e.g., no tremors, involuntary shaking, stiffness,rigidity, reduced arm swing, slowness, abnormal posture, or balance issues).",5,"The old response says only ""normal,"" which in this clinical context implies that no abnormalities were observed in the body parts examined. This directly supports the new positive statement that no abnormal signs (tremors, rigidity, balance issues, etc.) are present. Therefore, the alignment is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,1,5,5
 2,Technical Quality and Environmental Context,C-Nami,"Indicate if any body part critical for this task is partially visible (or invisible). For example, was the subject wearing a mask that may have obstructed important visual information? Or did the face go out of frame while the subject was completing the task?",good visibility of upper body,"All critical body parts (e.g., unobstructed face) remain fully visible in the frame throughout the task.",4,"The response says “good visibility of upper body,” which implies that at least the upper body (including likely critical parts like the face) was clearly visible and not obstructed. It does not mention any missing or obscured critical body parts, so it aligns well with the statement that all critical body parts remain fully visible. However, it doesn’t explicitly confirm “throughout the task” or mention all possible critical parts, so a small amount of uncertainty remains.
 
-**Likert Score: 4**",,,
+**Likert Score: 4**",5,5,5,5
 53,Facial Expression and Ocular Analysis,C-Natalia,"Provide a brief description of the subject's perceived state of mind, noting whether they appear energetic, exhausted, calm, confused, or exhibit any other relevant emotional or cognitive cues.",energetic,"The subject appears calm and alert, with no signs of exhaustion, confusion, or inappropriate energy levels.",2,"The response “energetic” suggests a higher-than-baseline energy level, which may imply “increased” or “elevated” energy rather than “no signs of … inappropriate energy levels.” While being energetic does not necessarily contradict being alert or non-exhausted, it does conflict with the clause about no inappropriate energy levels, since the single word gives no indication that the energy is calm or appropriate. Thus, alignment with the full positive statement is low.
 
-**Likert Score: 2**",,,
+**Likert Score: 2**",1,1,1,5
 22,Motor Performance and Task Execution,C-Natalia,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.","subject follows instructions and completes task, but talks about a series instead of book or movie",The subject followed all instructions accurately while completing the task (no deviationsobserved).,3,"The response states that the subject ""follows instructions and completes task,"" but also notes a deviation: they talk about a series instead of a book or movie. This indicates that while the subject largely followed instructions, there was a clear, specific way in which they did not follow them accurately. Therefore, they did not follow *all* instructions with no deviations.
 
 A rating reflecting mostly correct behavior with a notable deviation is appropriate.
 
-**Likert Score: 3**",,,
+**Likert Score: 3**",5,5,5,4
 3,Technical Quality and Environmental Context,C-Nami,"Indicate whether any other individuals were present in the background. If so, provide a brief description (e.g., ""An older male is visible in the background""). Conclude with a final answer: ""Yes"" or ""No"".",none,No other individuals are visible in the background during the task.,5,"The old question asks whether any other individuals were present and to conclude with “Yes” or “No.” The response “none” clearly indicates that no other individuals were present. This directly supports the new statement: “No other individuals are visible in the background during the task.” Therefore, the alignment is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 24,Motor Performance and Task Execution,C-Natalia,"Please indicate whether the subject was able to follow the instructions while completing the task. If the subject was doing something differently, please describe.","subject follows instructions and completes task, but talks about a TV series instead of book or movie",The subject followed all instructions accurately while completing the task (no deviationsobserved).,2,"The response states that the subject ""follows instructions and completes task,"" but also notes a clear deviation: they talk about a TV series instead of a book or movie, which was presumably required. This means the subject did not follow all instructions accurately and there was a noticeable deviation.
 
 Thus, alignment with “no deviations observed” is low but not zero, since they did complete the task generally as instructed.
 
-**Likert Score: 2**",,,
+**Likert Score: 2**",5,5,5,4
 88,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",No.,The subject does not use complex or difficult-to-understand sentences.,5,"The old question asks whether the subject is using complex, difficult-to-understand sentences, and the response is ""No."" This means the respondent is saying the subject is *not* using complex or difficult sentences. The new question is a positive statement of that same idea: ""The subject does not use complex or difficult-to-understand sentences."" The response directly agrees with this statement.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 92,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Indicate which of the following are true for the subject: (i) The individual's face appears blank and emotionless, even when they are trying to express an emotion. (ii) The expression is weak or asymmetrical, and the individual has difficulty holding an expression (e.g., smile) for an extended period. Also mention if you observe other facial expression abnormalities. If there is nothing abnormal, output ""nothing abnormal"".","(i) The individual's face appears blank and emotionless, even when they are trying to express an emotion.","The subject’s facial expressions are natural, emotionally appropriate, and symmetrical (noblank/emotionless face, weakness, asymmetry, or difficulty holding expressions).",1,"The response explicitly states that the individual's face appears ""blank and emotionless,"" which directly contradicts the NEW_QUESTION’s description of natural, emotionally appropriate expressions. It indicates an abnormality rather than normal facial expressiveness and thus is in strong disagreement with the positive statement.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,1,1,1
 75,Motor Performance and Task Execution,LlaVA-Qwen,"Please describe whether the person demonstrates any difficulty through their facial expressions. Some examples of visible difficulty include furrowed brow, squinting eyes, clenched jaw, tight lips, head hanging low, sighing, wrinkled forehead, etc. Mention such specific details when found. End output with a final answer choice: ""Yes"" or ""No"".","The person demonstrates difficulty through their facial expressions, such as furrowed brow and tight lips.",The person shows no signs of difficulty in facial expressions.,1,"The response explicitly states that “The person demonstrates difficulty through their facial expressions, such as furrowed brow and tight lips.” This directly contradicts the new statement that the person shows no signs of difficulty in facial expressions. Therefore, alignment with the NEW_QUESTION is very low.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,1,1,1
 87,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",No.,The subject does not use complex or difficult-to-understand sentences.,5,"The OLD_QUESTION asks whether the subject is using complex, difficult-to-understand sentences, and the response is ""No."" This means the respondent is saying the subject is *not* using such complex sentences.
 
 The NEW_QUESTION is a positive statement: ""The subject does not use complex or difficult-to-understand sentences."" This directly matches the meaning of the response ""No"" to the OLD_QUESTION.
 
 Thus, the alignment is very strong.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 83,Speech and Cognitive-Linguistic Assessment,LlaVA-Qwen,"Indicate whether the subject is using complex sentences that are difficult to understand. Conclude with a final answer: ""Yes"" or ""No"".",No.,The subject does not use complex or difficult-to-understand sentences.,5,"The old question asks whether the subject *is* using complex, difficult-to-understand sentences, and the response is ""No."" This means the respondent is saying the subject is *not* using complex or difficult sentences.  
 
 The new question is a positive statement: ""The subject does not use complex or difficult-to-understand sentences."" This directly matches the meaning of the response ""No"" to the old question.  
 
 Thus, the alignment is very strong.  
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 21,Motor Performance and Task Execution,C-Natalia,"Please describe whether the person demonstrates any difficulty through their facial expressions. Some examples of visible difficulty include furrowed brow, squinting eyes, clenched jaw, tight lips, head hanging low, sighing, wrinkled forehead, etc. Mention such specific details when found. End output with a final answer choice: ""Yes"" or ""No"".","wrinkled forehead, frequent pauses that increased midway into the recording",The person shows no signs of difficulty in facial expressions.,1,"The old response explicitly notes “wrinkled forehead,” which is one of the listed signs of visible difficulty, and mentions “frequent pauses,” suggesting increased difficulty over time. This directly contradicts the new statement that the person shows no signs of difficulty in facial expressions. Therefore, alignment with the new question is very low.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",2,2,1,2
 61,Technical Quality and Environmental Context,LlaVA-Qwen,"Indicate if any body part critical for this task is partially visible (or invisible). For example, was the subject wearing a mask that may have obstructed important visual information? Or did the face go out of frame while the subject was completing the task?","No, the face was visible throughout the video.","All critical body parts (e.g., unobstructed face) remain fully visible in the frame throughout the task.",5,"The response explicitly states that “the face was visible throughout the video” and that there was no obstruction (“No” to any critical part being partially visible or invisible). This directly supports the idea that a key critical body part (the face) remained fully visible for the entire task, aligning strongly with the new positive statement.
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 72,Motor Performance and Task Execution,LlaVA-Qwen,"Document any abnormal signs observed in body parts other than the face. This includes, but is not limited to, tremors in the hands, involuntary shaking or rhythmic movements of the upper or lower extremities, stiffness or rigidity in the limbs, reduced arm swing while speaking, or any signs of bradykinesia (slowness of movement). Additionally, note any abnormal postures, difficulty in maintaining balance, or other motor irregularities that may be indicative of Parkinson's disease.",No abnormal signs were observed in the person's body parts other than the face.,"No abnormal signs are observed in body parts (e.g., no tremors, involuntary shaking, stiffness,rigidity, reduced arm swing, slowness, abnormal posture, or balance issues).",5,"The response explicitly states: “No abnormal signs were observed in the person's body parts other than the face.”  
 
 The new question is a positive statement that no abnormal signs (tremors, stiffness, abnormal posture, etc.) are observed in body parts. This matches exactly what the response reports—an absence of abnormalities in non-facial body parts.  
 
 Therefore, the alignment is complete and unambiguous.  
 
-**Likert Score: 5**",,,
+**Likert Score: 5**",5,5,5,5
 15,Technical Quality and Environmental Context,C-Cayla,"How far is the camera? A good position of the camera would be when the upper half of the subject's body remains visible, while the lower half is not captured in the frame. If the upper body is only partly visible, the camera is too close. If the lower body is also visible, the camera is too far.",too close,"The camera distance is appropriate, with the upper half of the subject’s body visible and thelower half not captured.",1,"The old response says “too close,” which directly indicates that the camera distance is *not* appropriate according to the described standard. The new question asserts that the camera distance *is* appropriate, so the response contradicts this statement.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,1,1,1
 93,Facial Expression and Ocular Analysis,LlaVA-Qwen,"Indicate the extent of lips parting when the subject is not saying anything (i.e., always/most of the times/sometimes/very few times/never).",most of the times,"The subject’s lips are never parted when not speaking (e.g., closed or slightly parted most ofthe time).",1,"The old response says the subject’s lips are parted “most of the times” when not speaking.  
 The new statement claims the lips are *never* parted (i.e., generally closed). These are in direct contradiction: “most of the times” parted vs. “never” parted.  
 Thus, the response strongly disagrees with the new statement.
 
-**Likert Score: 1**",,,
+**Likert Score: 1**",1,1,1,2
 52,Facial Expression and Ocular Analysis,C-Natalia,"Provide a brief description of the subject's perceived state of mind, noting whether they appear energetic, exhausted, calm, confused, or exhibit any other relevant emotional or cognitive cues.",calm,"The subject appears calm and alert, with no signs of exhaustion, confusion, or inappropriate energy levels.",3,"The response only states that the subject is ""calm."" This directly supports the ""appears calm"" part of the new statement but provides no information about alertness, exhaustion, confusion, or energy levels. Since it partially aligns but does not confirm the full statement, a moderate agreement score is appropriate.
 
-**Likert Score: 3**",,,
+**Likert Score: 3**",5,5,5,5
