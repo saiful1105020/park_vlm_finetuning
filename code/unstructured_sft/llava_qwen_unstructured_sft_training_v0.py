@@ -3,6 +3,10 @@ Version History:
 - v0: Initial version, runs successfully, but converges too quickly. Loss plateaues around 3.75.
 """
 import os
+
+# Must come BEFORE any torch/transformers imports
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 import av
 import fsspec
 import shutil
@@ -31,7 +35,7 @@ MAX_LENGTH = 256
 BATCH_SIZE = 1
 NUM_FRAMES = 1 # more frames -> more VRAM needed
 DATASET_PATH = "/localdisk1/PARK/park_vlm_finetuning/data/SFT_unstructured" # path where to save the dataset
-OUTPUT_DIR = "/localdisk1/PARK/park_vlm_finetuning/checkpoints/unstructured_sft" # path where to save the checkpoints
+OUTPUT_DIR = "/localdisk1/PARK/park_vlm_finetuning/checkpoints/unstructured_sft_llava_qwen" # path where to save the checkpoints
 
 USE_LORA = False
 USE_QLORA = True
@@ -476,7 +480,7 @@ args = TrainingArguments(
     per_device_eval_batch_size = BATCH_SIZE,
     gradient_accumulation_steps = gradient_accumulation_steps,
     learning_rate = 2e-05,
-    max_steps = 5000, # adjust this depending on your dataset size
+    max_steps = 2000, # adjust this depending on your dataset size
     lr_scheduler_type = 'cosine',
     warmup_ratio = 0.1,
     remove_unused_columns=False,
@@ -484,8 +488,9 @@ args = TrainingArguments(
     # args related to eval/save
     logging_steps = 5,
     save_strategy = 'steps',
-    save_steps=len(train_dataset)//(BATCH_SIZE*gradient_accumulation_steps), # save every epoch
-    save_total_limit = 50,
+    # save_steps=len(train_dataset)//(BATCH_SIZE*gradient_accumulation_steps), # save every epoch
+    save_steps = 100,
+    save_total_limit = 20,
     # fp16=(torch_dtype == torch.float16),
     # bf16=(torch_dtype == torch.bfloat16),
     fp16=False,
