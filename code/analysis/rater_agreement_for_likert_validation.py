@@ -183,14 +183,17 @@ class AgreementMetrics:
     def compute_agreement_metrics(self):
         if self.mode == "human-human":
             first_rating_columns = self.rating_columns
+            second_rating_columns = self.rating_columns
         elif self.mode == "human-AI":
-            first_rating_columns = [self.gpt_rating_column]
+            first_rating_columns = self.rating_columns
+            second_rating_columns = [self.gpt_rating_column]
         elif self.mode == "GT-AI":
-            first_rating_columns = [self.gpt_rating_column]
+            first_rating_columns = self.rating_columns
+            second_rating_columns = [self.gpt_rating_column]
 
         for i, col1 in enumerate(first_rating_columns):
             R1 = self.ratings[col1]
-            for j, col2 in enumerate(self.rating_columns):
+            for j, col2 in enumerate(second_rating_columns):
                 if self.mode=="human-human" and i==j:
                     continue
                 R2 = self.ratings[col2]
