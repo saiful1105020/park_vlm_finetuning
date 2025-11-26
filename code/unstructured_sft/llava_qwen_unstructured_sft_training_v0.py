@@ -465,7 +465,7 @@ test_dataset = LLaVAVideoJsonlDataset(
 # let the dataset see the model config for process_images
 test_dataset.model_config = model.config
 
-gradient_accumulation_steps = 1
+gradient_accumulation_steps = 4
 
 args = TrainingArguments(
     # args related to training
@@ -476,13 +476,13 @@ args = TrainingArguments(
     per_device_eval_batch_size = BATCH_SIZE,
     gradient_accumulation_steps = gradient_accumulation_steps,
     learning_rate = 2e-05,
-    max_steps = 20000, # adjust this depending on your dataset size
+    max_steps = 5000, # adjust this depending on your dataset size
     lr_scheduler_type = 'cosine',
     warmup_ratio = 0.1,
     remove_unused_columns=False,
 
     # args related to eval/save
-    logging_steps = 20,
+    logging_steps = 5,
     save_strategy = 'steps',
     save_steps=len(train_dataset)//(BATCH_SIZE*gradient_accumulation_steps), # save every epoch
     save_total_limit = 50,
@@ -492,7 +492,7 @@ args = TrainingArguments(
     bf16=False,
     # fp16_full_eval = True,
     optim = 'adamw_bnb_8bit', # adam in lower-bits to save memory, consider changing to 'adamw_torch' if model is not converging
-    # report_to = "wandb", # install wand to use this
+    report_to = "wandb", # install wand to use this
     hub_model_id = None,
     push_to_hub = False, # wel'll push the model to hub after each epoch
 
