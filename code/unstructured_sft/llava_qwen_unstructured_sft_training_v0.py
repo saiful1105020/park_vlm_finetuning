@@ -29,7 +29,7 @@ import decord
 # from llava.model.builder import load_pretrained_model
 MAX_LENGTH = 256
 BATCH_SIZE = 1
-NUM_FRAMES = 2 # more frames -> more VRAM needed
+NUM_FRAMES = 1 # more frames -> more VRAM needed
 DATASET_PATH = "/localdisk1/PARK/park_vlm_finetuning/data/SFT_unstructured" # path where to save the dataset
 OUTPUT_DIR = "/localdisk1/PARK/park_vlm_finetuning/checkpoints/unstructured_sft" # path where to save the checkpoints
 
@@ -37,38 +37,49 @@ USE_LORA = False
 USE_QLORA = True
 MODEL_ID = "lmms-lab/LLaVA-Video-7B-Qwen2"
 device = torch.device("cuda:0")
+torch_dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+dtypes = {
+    torch.bfloat16: "bfloat16",
+    torch.float16: "float16"
+}
+# print(torch_dtype) -- torch.bfloat16
 
 tokenizer, model, image_processor, max_length = load_pretrained_model(
-    MODEL_ID,
-    None,
-    "llava_qwen",
-    dtype=torch.float32,
-    device_map={"": 0},
-    attn_implementation="sdpa",
+    model_path = MODEL_ID,
+    model_base = None,
+    model_name = "llava_qwen",
+    torch_dtype = dtypes[torch_dtype],
+    device_map = {"": 0},
+    attn_implementation = "sdpa"
 )
 
+# Ensured that the model is fully using the bf16 data type
 model_config = model.config
 
 # Disable anyres + unpad, use flat patches and square images instead
-model_config.image_aspect_ratio = "square"      # or "pad"
+model_config.image_aspect_ratio = "pad"      # or "square"
 model_config.mm_patch_merge_type = "flat"
 
 # Make sure the inner model config sees the same values
 if hasattr(model, "get_model"):
     inner = model.get_model()
-    inner.config.image_aspect_ratio = "square"
+    inner.config.image_aspect_ratio = "pad"
     inner.config.mm_patch_merge_type = "flat"
 else:
     # fallback if no get_model()
-    model.config.image_aspect_ratio = "square"
+    model.config.image_aspect_ratio = "pad"
     model.config.mm_patch_merge_type = "flat"
-
-model.config.use_cache = False
-model.gradient_checkpointing_enable()
-model.enable_input_require_grads()
 
 core = model.get_base_model() if hasattr(model, "get_base_model") else model
 vt = core.get_vision_tower()
+
+# vision encoder
+vt.to(device=device, dtype=torch_dtype)
+
+# mm projector (name can vary a bit, so check both common ones)
+if hasattr(core, "mm_proj"):
+    core.mm_proj.to(device=device, dtype=torch_dtype)
+
 if hasattr(vt, "config"):
     vt.config.image_aspect_ratio = "pad"
 
@@ -81,7 +92,7 @@ if USE_QLORA:
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
         bnb_4bit_use_double_quant=True,
-        bnb_4bit_compute_dtype=torch.float32,
+        bnb_4bit_compute_dtype=torch_dtype,
     )
 else:
     bnb_config = None
@@ -107,9 +118,17 @@ lora_config = LoraConfig(
 if USE_QLORA:
     model = get_peft_model(model, lora_config)
 
+# So far, all weights are in bfloat16, only Lora weights are in float32
+
 model.config.use_cache = False
 model.enable_input_require_grads()
 model.gradient_checkpointing_enable()
+
+for p in model.parameters():
+    p.requires_grad = False
+for n, p in model.named_parameters():
+    if "lora_" in n:
+        p.requires_grad = True
 
 # Video Reader
 from decord import VideoReader, gpu, cpu
@@ -354,6 +373,8 @@ class LLaVAVideoJsonlDataset(Dataset):
         labels = input_ids.clone()
         if self.tokenizer.pad_token_id is not None:
             labels[input_ids == self.tokenizer.pad_token_id] = -100
+
+        pixel_values_videos = pixel_values_videos.to(dtype=torch_dtype)
     
         return {
             "input_ids": input_ids,          # (L,)
@@ -465,11 +486,13 @@ args = TrainingArguments(
     save_strategy = 'steps',
     save_steps=len(train_dataset)//(BATCH_SIZE*gradient_accumulation_steps), # save every epoch
     save_total_limit = 50,
-    fp16 = True, # we have the model train and eval with fp16 precision
-    bf16= False,
+    # fp16=(torch_dtype == torch.float16),
+    # bf16=(torch_dtype == torch.bfloat16),
+    fp16=False,
+    bf16=False,
     # fp16_full_eval = True,
     optim = 'adamw_bnb_8bit', # adam in lower-bits to save memory, consider changing to 'adamw_torch' if model is not converging
-    report_to = "wandb", # install wand to use this
+    # report_to = "wandb", # install wand to use this
     hub_model_id = None,
     push_to_hub = False, # wel'll push the model to hub after each epoch
 
