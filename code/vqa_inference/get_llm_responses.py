@@ -139,7 +139,7 @@ def get_test_responses(llm_name="QwenVL", output_path="./"):
         break
 
     dataset_df = pd.DataFrame.from_dict(dataset)
-    dataset_path = os.path.join(output_path, f"{llm_name}_test_responses_v0.csv")
+    dataset_path = os.path.join(output_path, f"{llm_name}_test_responses_v1.csv")
     dataset_df.to_csv(dataset_path, index=False)
     return
 
