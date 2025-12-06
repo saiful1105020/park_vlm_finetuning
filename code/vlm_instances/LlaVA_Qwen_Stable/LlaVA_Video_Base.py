@@ -1,6 +1,7 @@
 import os
 os.environ['XDG_CACHE_HOME'] = '/localdisk1/saiful_cache/.cache'
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
 import sys
 sys.path.append("/localdisk1/PARK/park_vlm_finetuning/code/Prompt_Generation")
 import torch
@@ -31,7 +32,7 @@ pretrained = "lmms-lab/LLaVA-Video-7B-Qwen2"
 model_name = "llava_qwen"
 device = "cuda"
 device_map = "auto"
-attention_implementation = None #"sdpa"
+attention_implementation = "sdpa"
 tokenizer, model, image_processor, max_length = load_pretrained_model(pretrained, None, model_name, torch_dtype="bfloat16", device_map=device_map, attn_implementation = attention_implementation)  # Add any other thing you want to pass in llava_model_args
 model.eval()
 
@@ -98,7 +99,7 @@ def get_LlaVAVideo_response(video_path, text_prompt, question_id=None):
     original_video_path = video_path
     video_path = trim_video(video_path)
 
-    max_frames_num = 64
+    max_frames_num = 32
     video,frame_time,video_time = load_video(video_path, max_frames_num, 1, force_sample=True)
     video = image_processor.preprocess(video, return_tensors="pt")["pixel_values"].cuda().bfloat16()
     video = [video]

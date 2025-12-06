@@ -1,12 +1,27 @@
 import argparse, json, os, random, csv
 from pathlib import Path
 
-SYSTEM_MESSAGE = "Imagine you are a clinician specializing in movement disorders. " \
-"Rely on your knowledge of neurology and clinical care. " \
-"Now, you are watching a home-recorded video of a person performing some tasks used to assess Parkinson's disease. " \
-"No experts supervise the person, so there can be different types of noise, or the person may not follow the task instructions properly. " \
-"The person can also show symptoms that may be associated with having Parkinson's disease. " \
-"Focus on the noises, task instructions, user compliance, and possible symptoms of Parkinson's disease while answering the question."
+# SYSTEM_MESSAGE = "Imagine you are a clinician specializing in movement disorders. " \
+# "Rely on your knowledge of neurology and clinical care. " \
+# "Now, you are watching a home-recorded video of a person performing some tasks used to assess Parkinson's disease. " \
+# "No experts supervise the person, so there can be different types of noise, or the person may not follow the task instructions properly. " \
+# "The person can also show symptoms that may be associated with having Parkinson's disease. " \
+# "Focus on the noises, task instructions, user compliance, and possible symptoms of Parkinson's disease while answering the question."
+
+SYSTEM_MESSAGE = "Now, You are reviewing a home-recorded video of a person performing tasks " \
+"commonly used to assess Parkinson's disease. Since the video is unsupervised, there may be noise, " \
+"imperfect task execution, or deviations from standard instructions. Your role is to carefully observe " \
+"and describe the following aspects without making diagnostic judgments or conclusions regarding the diseases."
+
+TASK_INSTRUCTION = "Task instructions: The person will talk about a recent book they have read or a movie " \
+"or TV show they have watched. For this task, the face is crucial body part you should focus on. " \
+"Additionally, you should also observe other body parts for relevant symptoms or signs of " \
+"Parkinson's disease. However, do not give your judgement as clinician other than answering the question " \
+"very carefully analyzing the video. Answer the question about what is happening in the video. " \
+"Keep your response short and precise. Please only answer the question from the video. " \
+"Keep your response precise and to the point."
+
+SYSTEM_MESSAGE += "\n\n" + TASK_INSTRUCTION
 
 def to_vlm_conversations(row, system=SYSTEM_MESSAGE, include_system=True):
     path, q, a = row
@@ -74,4 +89,5 @@ def main(fold="train"):
         print(f"Wrote {len(objs)} examples to {output_jsonl}")
 
 if __name__ == "__main__":
+    main(fold="train")
     main(fold="test")

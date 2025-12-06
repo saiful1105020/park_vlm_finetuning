@@ -202,7 +202,7 @@ def main():
         "/localdisk1/PARK/park_vlm_finetuning/model_outputs/minicpm_test_responses_with_likert_v1.csv",
         "/localdisk1/PARK/park_vlm_finetuning/model_outputs/phi3.5_test_responses_with_likert_v1.csv",
         "/localdisk1/PARK/park_vlm_finetuning/model_outputs/QwenVL_test_responses_with_likert.csv",
-        "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_test_responses_with_likert_v0.csv"
+        "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_test_responses_with_likert_v1.csv"
     ]
 
     clinical_ratings = pd.read_csv("/localdisk1/PARK/park_vlm_finetuning/data/QA_dataset/combined_qa_dataset_test_groud_truth_likert.csv")

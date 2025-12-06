@@ -53,3 +53,18 @@ if __name__ == "__main__":
             fout.write(json.dumps(out_sample) + "\n")
 
     print(f"Converted dataset saved to {output_jsonl}")
+
+    input_jsonl = "/localdisk1/PARK/park_vlm_finetuning/data/SFT_unstructured/vlm_conversations_train.jsonl"
+    output_jsonl = "/localdisk1/PARK/park_vlm_finetuning/data/SFT_unstructured/vlm_conversations_train_llavanext.jsonl"
+
+    with open(input_jsonl, "r") as fin, open(output_jsonl, "w") as fout:
+        for line in fin:
+            sample = json.loads(line)
+            conversation = convert_llava_video_to_llava_next(sample)
+
+            out_sample = {
+                "conversation": conversation
+            }
+            fout.write(json.dumps(out_sample) + "\n")
+
+    print(f"Converted dataset saved to {output_jsonl}")
