@@ -192,7 +192,8 @@ def main():
         "MiniCPM",
         "Phi3.5",
         "QwenVL",
-        "LlaVA-Qwen-MSI"
+        "LlaVA-Qwen-MSI",
+        "LlaVA-Qwen-SFT-100-steps"
     ]
     llm_ratings_paths = [
         "/localdisk1/PARK/park_vlm_finetuning/model_outputs/internVL2_test_responses_with_likert_v1.csv",
@@ -202,8 +203,11 @@ def main():
         "/localdisk1/PARK/park_vlm_finetuning/model_outputs/minicpm_test_responses_with_likert_v1.csv",
         "/localdisk1/PARK/park_vlm_finetuning/model_outputs/phi3.5_test_responses_with_likert_v1.csv",
         "/localdisk1/PARK/park_vlm_finetuning/model_outputs/QwenVL_test_responses_with_likert.csv",
-        "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_test_responses_with_likert_v1.csv"
+        "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_test_responses_with_likert_v1.csv",
+        "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_SFT_test_responses_with_likert_v1.csv"
     ]
+
+    assert len(llm_names) == len(llm_ratings_paths), "Mismatch in LLM names and paths"
 
     clinical_ratings = pd.read_csv("/localdisk1/PARK/park_vlm_finetuning/data/QA_dataset/combined_qa_dataset_test_groud_truth_likert.csv")
     clinical_ratings['video_path'] = clinical_ratings['video_path'].astype(str)
