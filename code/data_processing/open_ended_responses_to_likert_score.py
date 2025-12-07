@@ -108,7 +108,8 @@ if __name__ == "__main__":
     #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVANext_test_responses_v0.csv",
     #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/minicpm_test_responses_v1.csv",
     #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/phi3.5_test_responses_v1.csv",
-    #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/QwenVL_test_responses.csv"
+    #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/QwenVL_test_responses.csv",
+    #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_test_responses_v1.csv"
     # ]
 
     # LLM_OUTPUT_FILES = [
@@ -118,15 +119,16 @@ if __name__ == "__main__":
     #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVANext_test_responses_with_likert_v0.csv",
     #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/minicpm_test_responses_with_likert_v1.csv",
     #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/phi3.5_test_responses_with_likert_v1.csv",
-    #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/QwenVL_test_responses_with_likert.csv"
+    #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/QwenVL_test_responses_with_likert.csv",
+    #     "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_test_responses_with_likert_v1.csv"
     # ]
 
     LLM_INPUT_FILES = [
-        "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_test_responses_v1.csv"
+        "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_SFT_test_responses_v1.csv"
     ]
 
     LLM_OUTPUT_FILES = [
-        "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_test_responses_with_likert_v1.csv"
+        "/localdisk1/PARK/park_vlm_finetuning/model_outputs/LlaVAQwen_SFT_test_responses_with_likert_v1.csv"
     ]
 
     for input_csv, output_csv in zip(LLM_INPUT_FILES, LLM_OUTPUT_FILES):

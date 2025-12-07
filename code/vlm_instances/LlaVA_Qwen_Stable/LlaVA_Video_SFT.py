@@ -25,7 +25,7 @@ warnings.filterwarnings("ignore")
 
 # Load model from checkpoint
 from peft import PeftModel
-ADAPTER_PATH = "/localdisk1/PARK/park_vlm_finetuning/checkpoints/unstructured_sft_llava_qwen/checkpoint-100"
+ADAPTER_PATH = "/localdisk1/PARK/park_vlm_finetuning/checkpoints/unstructured_sft_llava_qwen/checkpoint-300"
 
 base_path = "/localdisk1/PARK/park_vlm/Videos"
 def get_video_path(filename):

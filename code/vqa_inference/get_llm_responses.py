@@ -93,7 +93,7 @@ def trim_video(input_path):
     out.release()
     return output_path
 
-def get_test_responses(llm_name="QwenVL", output_path="./"):
+def get_test_responses(llm_name="QwenVL", output_path="./", checkpoint_tag=None):
     # store the responses as list of dictionary here
     dataset = []
 
@@ -142,18 +142,23 @@ def get_test_responses(llm_name="QwenVL", output_path="./"):
         break
 
     dataset_df = pd.DataFrame.from_dict(dataset)
+    if checkpoint_tag is not None:
+        llm_name = f"{llm_name}_{checkpoint_tag}"
     dataset_path = os.path.join(output_path, f"{llm_name}_test_responses_v1.csv")
     dataset_df.to_csv(dataset_path, index=False)
     return
 
 if __name__ == "__main__":
-    # pass it as a function param later
+    output_path = "/localdisk1/PARK/park_vlm_finetuning/model_outputs"
+    
     # llm_name = "QwenVL"
     # llm_name = "LlaVANext"
     # llm_name = "LlaVANext_SFT"
     # llm_name = "LlaVAQwen"
+    # get_test_responses(llm_name, output_path)
+    
     llm_name = "LlaVAQwen_SFT"
-    output_path = "/localdisk1/PARK/park_vlm_finetuning/model_outputs"
-    get_test_responses(llm_name, output_path)
+    checkpoint_tag = "300_steps"
+    get_test_responses(llm_name, output_path, checkpoint_tag)
 
     
