@@ -6,6 +6,7 @@ sys.path.append("/localdisk1/PARK/park_vlm_finetuning/code/Prompt_Generation")
 import torch
 import av
 import numpy as np
+import cv2
 
 # generate_text_prompt
 from generate_prompts import *
@@ -57,14 +58,59 @@ def load_video(video_path, max_frames_num, fps=1, force_sample=False):
     spare_frames = vr.get_batch(frame_idx).asnumpy()
     return spare_frames,frame_time,video_time
 
-def get_LlaVAVideo_response(video_path, text_prompt, question_id=None):
+def trim_video(input_path):
+    '''
+    If the video is longer than 60 seconds, trim it to 60 seconds
+    '''
+    output_path = input_path[:-4]+"_trimmed.mp4"
+
+    # Open the input video
+    cap = cv2.VideoCapture(input_path)
+
+    # Get video properties
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    # Calculate max number of frames for 60 seconds
+    max_frames = int(fps * 60)
+
+    # Use original frame count if less than 60 seconds
+    frames_to_write = min(max_frames, total_frames)
+
+    # Define the codec and create VideoWriter object
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Use 'avc1' or 'H264' if needed
+    out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
+
+    # Write frames up to 60 seconds
+    frame_count = 0
+    while frame_count < frames_to_write:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        out.write(frame)
+        frame_count += 1
+
+    # Release everything
+    cap.release()
+    out.release()
+    return output_path
+
+def get_LlaVAVideo_SFT_response(video_path, text_prompt, question_id=None):
+    # Trim video (beyond 60 seconds)
+    original_video_path = video_path
+    video_path = trim_video(video_path)
+
     max_frames_num = 32
     video,frame_time,video_time = load_video(video_path, max_frames_num, 1, force_sample=True)
     video = image_processor.preprocess(video, return_tensors="pt")["pixel_values"].cuda().bfloat16()
     video = [video]
+
     conv_template = "qwen_1_5"  # Make sure you use correct chat template for different models
     time_instruciton = f"The video lasts for {video_time:.2f} seconds, and {len(video[0])} frames are uniformly sampled from it. These frames are located at {frame_time}.Please answer the following questions related to this video."
     question = DEFAULT_IMAGE_TOKEN + f"\n{time_instruciton}\n{text_prompt}"
+
     conv = copy.deepcopy(conv_templates[conv_template])
     conv.append_message(conv.roles[0], question)
     conv.append_message(conv.roles[1], None)
@@ -85,6 +131,9 @@ def get_LlaVAVideo_response(video_path, text_prompt, question_id=None):
         text_outputs = ""
         print(f"Exception in parsing LlaVAQwen response for question id {question_id}: {e}")
 
+    if video_path != original_video_path:
+        os.remove(video_path)
+
     return text_outputs
 
 if __name__ == "__main__":
@@ -92,9 +141,9 @@ if __name__ == "__main__":
     video_path = get_video_path(filename)
     
     text_prompt = generate_text_prompt(question_id=1)    
-    model_response = get_LlaVAVideo_response(video_path, text_prompt, question_id=1)
+    model_response = get_LlaVAVideo_SFT_response(video_path, text_prompt, question_id=1)
     print(model_response)
 
     text_prompt = generate_text_prompt(question_id=2)
-    model_response = get_LlaVAVideo_response(video_path, text_prompt, question_id=2)
+    model_response = get_LlaVAVideo_SFT_response(video_path, text_prompt, question_id=2)
     print(model_response)

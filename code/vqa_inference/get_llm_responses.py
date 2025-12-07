@@ -21,8 +21,9 @@ from generate_prompts import *
 # VLM inference functions
 from QwenVL.Qwen25_7B_VL import *
 from LlaVANext.LLaVA_Next_VL import *
-from LlaVANext.LlaVA_Next_SFT import *
+# from LlaVANext.LlaVA_Next_SFT import *
 from LlaVA_Qwen_Stable.LlaVA_Video_Base import *
+from LlaVA_Qwen_Stable.LlaVA_Video_SFT import *
 
 base_folder = "/localdisk1/PARK/park_vlm/Annotations/Clinical"
 annotators = ["Cayla", "Nami", "Natalia"]
@@ -120,6 +121,8 @@ def get_test_responses(llm_name="QwenVL", output_path="./"):
                     response = get_LlaVANextSFT_response(video_path, prompt, qid)
                 elif llm_name == "LlaVAQwen":
                     response = get_LlaVAVideo_response(video_path, prompt, qid)
+                elif llm_name == "LlaVAQwen_SFT":
+                    response = get_LlaVAVideo_SFT_response(video_path, prompt, qid)
                 elif llm_name == "Other":
                     raise Exception(f"{llm_name} not implemented")
 
@@ -148,7 +151,8 @@ if __name__ == "__main__":
     # llm_name = "QwenVL"
     # llm_name = "LlaVANext"
     # llm_name = "LlaVANext_SFT"
-    llm_name = "LlaVAQwen"
+    # llm_name = "LlaVAQwen"
+    llm_name = "LlaVAQwen_SFT"
     output_path = "/localdisk1/PARK/park_vlm_finetuning/model_outputs"
     get_test_responses(llm_name, output_path)
 
